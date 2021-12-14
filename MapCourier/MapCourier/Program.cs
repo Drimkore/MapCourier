@@ -17,7 +17,7 @@ namespace MapCourier
 
         public static void Main(string[] args)
         {
-            using (DBContext db = new DBContext())
+            using (MapContext db = new MapContext())
             {
                 // создаем два объекта User
                 Order initOrder = new Order { 

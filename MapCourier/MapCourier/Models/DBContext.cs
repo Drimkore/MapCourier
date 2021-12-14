@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MapCourier.Models
 {
-    public class DBContext : DbContext
+    public class MapContext : DbContext
     {
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Storage> Storages { get; set; } = null!;
-        public DBContext() => Database.EnsureCreated();
+        public MapContext() => Database.EnsureCreated();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
