@@ -161,7 +161,8 @@ namespace MapCourier
                 Result.Add(new(mark));
             }
         }
-
+        public static List<Mark> ClientMarks;
+        public static List<Mark> StorageMarks;
         public static List<List<Mark>> GetAllPath(List<Mark> marks)
         {
             List<List<Mark>> result = new List<List<Mark>>();
