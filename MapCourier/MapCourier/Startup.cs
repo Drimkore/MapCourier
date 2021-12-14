@@ -18,6 +18,7 @@ namespace MapCourier
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddEntityFrameworkSqlite().AddDbContext<DBContext>();
+            services.AddMvcCore();
         }
 
 

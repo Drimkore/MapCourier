@@ -34,9 +34,9 @@ namespace MapCourier
                     storageAddress="1" };
 
                 // добавляем их в бд
-                db.Orders.Add(initOrder);
-                db.Storages.Add(initStorage);
-                db.SaveChanges();
+               // db.Orders.Add(initOrder);
+               // db.Storages.Add(initStorage);
+               // db.SaveChanges();
             }
             CreateHostBuilder(args).Build().Run();
         }

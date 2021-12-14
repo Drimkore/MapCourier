@@ -110,6 +110,7 @@ namespace MapCourier
     {
         private static double Spread = 100;
         public static List<Mark> Result = new List<Mark>();
+        
         public static void FindPath(Mark mark)
         {
             if (mark.PastMark.Count > 2)

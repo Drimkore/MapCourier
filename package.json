@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "sql.js": "^1.6.2",
+    "sqlite3": "^5.0.2"
+  }
+}
