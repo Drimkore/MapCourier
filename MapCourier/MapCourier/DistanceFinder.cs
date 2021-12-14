@@ -381,7 +381,7 @@ namespace MapCourier
 
     public class AlgorithmDijkstra
     {
-        public void FindPath(GraphVertex startPosition, GraphVertex endPosition)
+        public void FindPaths(GraphVertex startPosition, GraphVertex endPosition)
         {
 
         }
