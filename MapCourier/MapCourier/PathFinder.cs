@@ -110,7 +110,7 @@ namespace MapCourier
     }
     class PathFinder
     {
-        private double Spread = 100;
+        private double Spread = 0.01; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks;
         public List<Mark> StorageMarks;
