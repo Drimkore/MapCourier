@@ -91,7 +91,6 @@ namespace MapCourier
         public readonly double Distance;
         public MarksNDistance(Mark mark1, Mark mark2)
         { 
-            var 
             Mark1 = mark1;
             Mark2 = mark2;
             Distance = Convert.ToDouble(DistanceFinder.GetDistance(mark1.X, mark1.Y, mark2.X, mark2.Y));
