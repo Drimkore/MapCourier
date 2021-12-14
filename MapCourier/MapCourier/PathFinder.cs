@@ -16,7 +16,6 @@ namespace MapCourier
         public double PastMarkDist;
         public List<Mark> NearMarks = new List<Mark>();
         public double NearMarkDist;
-        public int IterationCount = 0;
         public readonly char Status = 'n'; // 'b' - busy, 'f' - free, 'n' - not needed
         public Mark(string x, string y)
         {
@@ -37,7 +36,6 @@ namespace MapCourier
             NearStorageDist = mark.NearStorageDist;
             NearMarks = new List<Mark>(mark.NearMarks);
             NearMarkDist = mark.NearMarkDist;
-            IterationCount = mark.IterationCount;
             Status = mark.Status;
         }
         public int CompareTo(object obj)
@@ -114,24 +112,17 @@ namespace MapCourier
         public static List<Mark> Result = new List<Mark>();
         public static void FindPath(Mark mark)
         {
-            if (mark.PastMark.Count > mark.IterationCount)
-            {
-                return;
-            }
             if (mark.PastMark.Count > 2)
             {
                 Result.Add(new Mark(mark));
                 return;
             }
-
             mark.NearMarkDist = double.MaxValue;
             foreach (var i in ClientMarks)
             {
                 Mark ClientMark = new(i);
                 double distance = DistanceFinder.GetMapsDistance(mark, ClientMark);
                 if (distance == 0)
-                    continue;
-                if (mark.PastMark.Count > 1 && mark.PastMark[mark.PastMark.Count - 1].NearMarkDist > distance + Spread)
                     continue;
                 bool flag = false;
                 foreach (var j in mark.PastMark)
@@ -143,18 +134,20 @@ namespace MapCourier
                     continue;
                 if (distance <= mark.NearMarkDist)
                 {
-                    if (mark.NearMarkDist - distance < Spread)
+                    if (mark.NearMarkDist - distance > Spread)
                     {
                         for (var j = 0; j < mark.NearMarks.Count; j++)
                         {
                             if (mark.NearMarks[j].PastMarkDist > distance + Spread)
+                            {
                                 mark.NearMarks.Remove(mark.NearMarks[j]);
+                                j--;
+                            }
                         }
                     }
                     ClientMark.PastMarkDist = distance;
                     ClientMark.PastMark = new List<Mark>(mark.PastMark);
                     ClientMark.PastMark.Add(new(mark));
-                    ClientMark.IterationCount = mark.IterationCount + 1;
                     mark.NearMarks.Add(ClientMark);
                     mark.NearMarkDist = distance;
                 }
