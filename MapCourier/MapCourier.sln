@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31729.503
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCourier", "MapCourier\MapCourier.csproj", "{66773F5F-8413-459B-BEE0-36C504BDCAAF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{8E78D093-EDBB-4D43-B9F4-394439791338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66773F5F-8413-459B-BEE0-36C504BDCAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66773F5F-8413-459B-BEE0-36C504BDCAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66773F5F-8413-459B-BEE0-36C504BDCAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66773F5F-8413-459B-BEE0-36C504BDCAAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E78D093-EDBB-4D43-B9F4-394439791338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E78D093-EDBB-4D43-B9F4-394439791338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E78D093-EDBB-4D43-B9F4-394439791338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E78D093-EDBB-4D43-B9F4-394439791338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6515B387-7E98-4838-A11A-C0A1DAAA825F}
+		SolutionGuid = {C1BDA793-3EBF-47F0-A468-0378FE396B34}
 	EndGlobalSection
 EndGlobal
