@@ -2,7 +2,7 @@
 
 namespace WebApplication1.Models
 {
-    public class Storages
+    public class Storage
     {
         [Key]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходим id")]

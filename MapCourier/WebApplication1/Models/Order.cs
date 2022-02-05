@@ -2,7 +2,7 @@
 
 namespace WebApplication1.Models
 {
-    public class Orders
+    public class Order
     {
         [Key]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходим id")]
