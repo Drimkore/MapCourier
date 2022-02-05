@@ -14,6 +14,9 @@ namespace WebApplication1.Data
             : base(options)
         {
         }
+        public MapContext()
+        {
+        }
 
         public DbSet<WebApplication1.Models.Order> Order { get; set; }
 
