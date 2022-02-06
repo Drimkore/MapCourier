@@ -16,8 +16,8 @@ namespace WebApplication1.SeedData
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MapContext>>()))
             {
-                if (context.Order.Any() && context.Storage.Any())
-                    return;
+                //if (context.Order.Any() && context.Storage.Any())
+                //    return;
 
                 context.Order.AddRange(
                     new Order
@@ -34,7 +34,7 @@ namespace WebApplication1.SeedData
                         coordinateLongitude = "1"
                     });
 
-                context.SaveChanges();
+                //context.SaveChanges();
             }
         }
     }
