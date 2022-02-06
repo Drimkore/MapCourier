@@ -58,6 +58,16 @@ namespace WebApplication1.Controllers
             var lengthY = mark1Y - mark2Y;
             return Math.Sqrt(lengthX * lengthX + lengthY * lengthY);
         }
+        public static double GetMapsDistance(string x1, string y1, string x2, string y2)
+        {
+            var mark1X = Convert.ToDouble(x1);
+            var mark1Y = Convert.ToDouble(y1);
+            var mark2X = Convert.ToDouble(x2);
+            var mark2Y = Convert.ToDouble(y2);
+            var lengthX = mark1X - mark2X;
+            var lengthY = mark1Y - mark2Y;
+            return Math.Sqrt(lengthX * lengthX + lengthY * lengthY);
+        }
     }
 }
 

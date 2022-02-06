@@ -11,8 +11,8 @@ namespace WebApplication1.Controllers
     {
         private double Spread = 100;
         private List<Mark> Result = new List<Mark>();
-        public List<Mark> ClientMarks;
-        public List<Mark> StorageMarks;
+        public List<Mark> ClientMarks = new List<Mark>();
+        public List<Mark> StorageMarks = new List<Mark>();
 
         public void FindPaths(Mark mark)
         {
@@ -141,11 +141,19 @@ namespace WebApplication1.Controllers
         {
             PathFinder pathFinder = new PathFinder();
             pathFinder.GetData();
-            Mark start;
+
+            Mark start = new Mark();
             using (var db = new MapContext())
             {
-                Storage dBMark = db.Storage.FirstOrDefault(p => p.coordinateLatitude == x && p.coordinateLongitude == y);
-                start = new Mark(dBMark.coordinateLatitude, dBMark.coordinateLongitude, dBMark.id);
+                int minDist = int.MaxValue;
+                foreach(var storage in db.Storage)
+                {
+                    var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.coordinateLatitude, storage.coordinateLongitude);
+                    if ( bufferDist < minDist)
+                    {
+                        start = new Mark(storage.coordinateLatitude, storage.coordinateLongitude, storage.id);
+                    }
+                }
             }
             pathFinder.FindPaths(start);
             var allPaths = pathFinder.GetAllPaths();

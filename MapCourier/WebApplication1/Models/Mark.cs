@@ -7,8 +7,8 @@ namespace WebApplication1.Models
 {
     public class Mark : IComparer<List<Mark>>
     {
-        public readonly string X;
-        public readonly string Y;
+        public readonly string? X;
+        public readonly string? Y;
         public int ID;
         public List<Mark> PastMark = new List<Mark>();
         public double NearStorageDist;
@@ -22,6 +22,7 @@ namespace WebApplication1.Models
             Y = y;
             ID = id;
         }
+
         public Mark() { }
         public Mark(Mark mark)
         {
