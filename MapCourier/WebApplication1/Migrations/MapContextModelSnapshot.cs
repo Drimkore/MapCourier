@@ -43,7 +43,7 @@ namespace WebApplication1.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("WebApplication1.Models.Storage", b =>
@@ -72,7 +72,7 @@ namespace WebApplication1.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Storage");
+                    b.ToTable("Storage", (string)null);
                 });
 #pragma warning restore 612, 618
         }

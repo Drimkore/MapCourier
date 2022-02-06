@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Models;
 using WebApplication1.Data;
-
+using Microsoft.EntityFrameworkCore;
 namespace WebApplication1.Controllers
 {
     class PathFinder
@@ -74,12 +74,17 @@ namespace WebApplication1.Controllers
             {
                 foreach (var o in db.Order)
                 {
+                    if (o.address == null)
+                        continue;
                     Mark clientMark = new Mark(o.addressCoordinateLatitude, o.addressCoordinateLongitude, o.id);
                     ClientMarks.Add(clientMark);
                 }
                 foreach (var s in db.Storage)
                 {
+                    if (s.storageAddress == null)
+                        continue;
                     Mark storageMark = new Mark(s.coordinateLatitude, s.coordinateLongitude, s.id);
+                    StorageMarks.Add(storageMark);
                 }
             }
         }
@@ -102,7 +107,8 @@ namespace WebApplication1.Controllers
                         m.NearStorageDist = distance;
                     }
                 }
-                resultMarks.Add(nearStorage);
+                if (nearStorage != null)
+                    resultMarks.Add(nearStorage);
                 result.Add(resultMarks);
             }
             return result;
