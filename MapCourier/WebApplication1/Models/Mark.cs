@@ -9,13 +9,13 @@ namespace WebApplication1.Models
     {
         public readonly string? X;
         public readonly string? Y;
-        public int ID;
+        public readonly int? ID;
         public List<Mark> PastMark = new List<Mark>();
         public double NearStorageDist;
         public double PastMarkDist;
         public List<Mark> NearMarks = new List<Mark>();
         public double NearMarkDist;
-        public readonly char Status = 'n'; // 'b' - busy, 'f' - free, 'n' - not needed
+      //  public readonly char Status = 'n'; // 'b' - busy, 'f' - free, 'n' - not needed
         public Mark(string x, string y, int id)
         {
             X = x;
@@ -34,7 +34,7 @@ namespace WebApplication1.Models
             NearStorageDist = mark.NearStorageDist;
             NearMarks = new List<Mark>(mark.NearMarks);
             NearMarkDist = mark.NearMarkDist;
-            Status = mark.Status;
+            //Status = mark.Status;
         }
 
         public int Compare(List<Mark> x, List<Mark> y)
