@@ -13,12 +13,12 @@ namespace WebApplication1.Controllers
             //var test = FinalResult.GetResultPath("50", "51");
             _logger = logger;
         }
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Index(string username, string password)
         {
             if (username.Any() || password.Any())
             {
@@ -35,11 +35,6 @@ namespace WebApplication1.Controllers
                 }
             }
             ViewBag.Message = "Не верно введены поля логина или пароля";
-            return View();
-        }
-
-        public IActionResult Index()
-        {
             return View();
         }
 
