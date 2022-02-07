@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 
         public HomeController(ILogger<HomeController> logger)
         {
-            var test = FinalResult.GetResultPath("50", "51");
+            //var test = FinalResult.GetResultPath("50", "51");
             _logger = logger;
         }
 

@@ -146,10 +146,10 @@ namespace WebApplication1.Controllers
             using (var db = new MapContext())
             {
                 int minDist = int.MaxValue;
-                foreach(var storage in db.Storage)
+                foreach (var storage in db.Storage)
                 {
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.coordinateLatitude, storage.coordinateLongitude);
-                    if ( bufferDist < minDist)
+                    if (bufferDist < minDist)
                     {
                         start = new Mark(storage.coordinateLatitude, storage.coordinateLongitude, storage.id);
                     }
