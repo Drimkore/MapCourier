@@ -3,13 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using WebApplication1.Data;
 
 #nullable disable
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(MapContext))]
-    [Migration("20220207162111_InitialCreate")]
+    [Migration("20220207174133_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,15 +24,15 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Latitude")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Longitude")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("addressCoordinateLatitude")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("addressCoordinateLongitude")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -46,11 +47,11 @@ namespace WebApplication1.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("coordinateLatitude")
+                    b.Property<string>("Latitude")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("coordinateLongitude")
+                    b.Property<string>("Longitude")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
