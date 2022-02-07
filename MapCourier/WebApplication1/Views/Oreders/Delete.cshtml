@@ -1,4 +1,4 @@
-@model WebApplication1.Models.Storage
+@model WebApplication1.Models.Order
 
 @{
     ViewData["Title"] = "Delete";
@@ -8,32 +8,26 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Storage</h4>
+    <h4>Order</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.storageName)
+            @Html.DisplayNameFor(model => model.address)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.storageName)
+            @Html.DisplayFor(model => model.address)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.storageAddress)
+            @Html.DisplayNameFor(model => model.addressCoordinateLongitude)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.storageAddress)
+            @Html.DisplayFor(model => model.addressCoordinateLongitude)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.coordinateLongitude)
+            @Html.DisplayNameFor(model => model.addressCoordinateLatitude)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.coordinateLongitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.coordinateLatitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.coordinateLatitude)
+            @Html.DisplayFor(model => model.addressCoordinateLatitude)
         </dd>
     </dl>
     

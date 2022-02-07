@@ -1,4 +1,4 @@
-@model IEnumerable<WebApplication1.Models.Storage>
+@model IEnumerable<WebApplication1.Models.Order>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,16 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.storageName)
+                @Html.DisplayNameFor(model => model.address)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.storageAddress)
+                @Html.DisplayNameFor(model => model.addressCoordinateLongitude)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.coordinateLongitude)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.coordinateLatitude)
+                @Html.DisplayNameFor(model => model.addressCoordinateLatitude)
             </th>
             <th></th>
         </tr>
@@ -31,16 +28,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.storageName)
+                @Html.DisplayFor(modelItem => item.address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.storageAddress)
+                @Html.DisplayFor(modelItem => item.addressCoordinateLongitude)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.coordinateLongitude)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.coordinateLatitude)
+                @Html.DisplayFor(modelItem => item.addressCoordinateLatitude)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

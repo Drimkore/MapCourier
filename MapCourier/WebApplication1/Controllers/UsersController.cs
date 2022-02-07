@@ -10,22 +10,22 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class StoragesController : Controller
+    public class UsersController : Controller
     {
         private readonly MapContext _context;
 
-        public StoragesController(MapContext context)
+        public UsersController(MapContext context)
         {
             _context = context;
         }
 
-        // GET: Storages
+        // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Storage.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
-        // GET: Storages/Details/5
+        // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var storage = await _context.Storage
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (storage == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(storage);
+            return View(user);
         }
 
-        // GET: Storages/Create
+        // GET: Users/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Storages/Create
+        // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,storageName,storageAddress,coordinateLongitude,coordinateLatitude")] Storage storage)
+        public async Task<IActionResult> Create([Bind("id,Login,Password")] User user)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(storage);
+                _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(storage);
+            return View(user);
         }
 
-        // GET: Storages/Edit/5
+        // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var storage = await _context.Storage.FindAsync(id);
-            if (storage == null)
+            var user = await _context.User.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            return View(storage);
+            return View(user);
         }
 
-        // POST: Storages/Edit/5
+        // POST: Users/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,storageName,storageAddress,coordinateLongitude,coordinateLatitude")] Storage storage)
+        public async Task<IActionResult> Edit(int id, [Bind("id,Login,Password")] User user)
         {
-            if (id != storage.id)
+            if (id != user.id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace WebApplication1.Controllers
             {
                 try
                 {
-                    _context.Update(storage);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StorageExists(storage.id))
+                    if (!UserExists(user.id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace WebApplication1.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(storage);
+            return View(user);
         }
 
-        // GET: Storages/Delete/5
+        // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace WebApplication1.Controllers
                 return NotFound();
             }
 
-            var storage = await _context.Storage
+            var user = await _context.User
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (storage == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(storage);
+            return View(user);
         }
 
-        // POST: Storages/Delete/5
+        // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var storage = await _context.Storage.FindAsync(id);
-            _context.Storage.Remove(storage);
+            var user = await _context.User.FindAsync(id);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StorageExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Storage.Any(e => e.id == id);
+            return _context.User.Any(e => e.id == id);
         }
     }
 }
