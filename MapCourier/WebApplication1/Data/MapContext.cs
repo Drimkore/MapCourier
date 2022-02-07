@@ -12,7 +12,10 @@ using WebApplication1.Models;
             : base(options)
         {
         }
+        public MapContext()
+        {
 
+        }
         public DbSet<WebApplication1.Models.User> User { get; set; }
 
         public DbSet<WebApplication1.Models.Order> Order { get; set; }
