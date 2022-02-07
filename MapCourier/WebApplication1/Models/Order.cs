@@ -16,10 +16,10 @@ namespace WebApplication1.Models
         public string address { get; set; }
         [Display(Name = "Адрес - координата долготы")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходима координата долготы")]
-        public string addressCoordinateLongitude { get; set; }
+        public string Longitude { get; set; }
         [Display(Name = "Адрес - координата широты")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходима координата широты")]
-        public string addressCoordinateLatitude { get; set; }
+        public string Latitude { get; set; }
         //public DateTime timeOfMakingOrder { get; set; }
     }
 }

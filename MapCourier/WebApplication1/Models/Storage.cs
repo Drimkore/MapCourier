@@ -15,9 +15,9 @@ namespace WebApplication1.Models
         public string storageAddress { get; set; }
         [Display(Name = "Адрес склада - координата долготы")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходима координата долготы склада")]
-        public string coordinateLongitude { get; set; }
+        public string Longitude { get; set; }
         [Display(Name = "Адрес склада - координата широты")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходима координата широты склада")]
-        public string coordinateLatitude { get; set; }
+        public string Latitude { get; set; }
     }
 }

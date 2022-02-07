@@ -1,14 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using WebApplication1.Data;
 using WebApplication1.Models;
 using WebApplication1.Controllers;
-//using WebApplication1.SeedData;
+using WebApplication1.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MapContext>(options =>
-//using WebApplication1.SeedData;
-
     options.UseSqlite(builder.Configuration.GetConnectionString("MapContext")));
 
 
@@ -18,12 +17,12 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
     SeedData.Initialize(services);
-}*/
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
