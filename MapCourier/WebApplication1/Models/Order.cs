@@ -20,6 +20,9 @@ namespace WebApplication1.Models
         [Display(Name = "Адрес - координата широты")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходима координата широты")]
         public string Latitude { get; set; }
+        [Display(Name = "Доставляется ли заказ")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Укажите, доставляется ли заказ")]
+        public string delivered { get; set; }
         //public DateTime timeOfMakingOrder { get; set; }
     }
 }

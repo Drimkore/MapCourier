@@ -16,7 +16,8 @@ namespace WebApplication1.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     address = table.Column<string>(type: "TEXT", nullable: false),
                     Longitude = table.Column<string>(type: "TEXT", nullable: false),
-                    Latitude = table.Column<string>(type: "TEXT", nullable: false)
+                    Latitude = table.Column<string>(type: "TEXT", nullable: false),
+                    delivered = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -25,17 +25,20 @@ namespace WebApplication1.SeedData
                     new Order
                     {   address = "Test",
                         Longitude = "1",
-                        Latitude = "1"
+                        Latitude = "1",
+                        delivered = "yes"
                     },
                     new Order
                     {   address = "Test",
                         Longitude = "1",
-                        Latitude = "1"
+                        Latitude = "1",
+                        delivered = "no"
                     },
                     new Order
                     {   address = "Test",
                         Longitude = "1",
-                        Latitude = "1"
+                        Latitude = "1",
+                        delivered = "yes"
                     });
                 context.Storage.AddRange(
                     new Storage
