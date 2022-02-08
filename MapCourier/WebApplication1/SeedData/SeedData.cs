@@ -16,10 +16,10 @@ namespace WebApplication1.SeedData
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MapContext>>()))
             {
-                /*if (context.Order.Any() && context.Storage.Any() && context.User.Any())
+                if (context.Order.Any() && context.Storage.Any() && context.User.Any())
                 {
                     return;
-                }*/
+                }
 
                 context.Order.AddRange(
                     new Order
