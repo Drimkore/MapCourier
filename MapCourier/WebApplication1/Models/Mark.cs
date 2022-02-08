@@ -15,12 +15,20 @@ namespace WebApplication1.Models
         public double PastMarkDist;
         public List<Mark> NearMarks = new List<Mark>();
         public double NearMarkDist;
-      //  public readonly char Status = 'n'; // 'b' - busy, 'f' - free, 'n' - not needed
+        public readonly string? Status; //"waiting"/"busy"/"finished"
+        public Mark(string x, string y, int id, string status)
+        {
+            X = x;
+            Y = y;
+            ID = id;
+            Status = status;
+        }
         public Mark(string x, string y, int id)
         {
             X = x;
             Y = y;
             ID = id;
+            Status = "storage";
         }
 
         public Mark() { }
@@ -34,7 +42,7 @@ namespace WebApplication1.Models
             NearStorageDist = mark.NearStorageDist;
             NearMarks = new List<Mark>(mark.NearMarks);
             NearMarkDist = mark.NearMarkDist;
-            //Status = mark.Status;
+            Status = mark.Status;
         }
 
         public int Compare(List<Mark> x, List<Mark> y)

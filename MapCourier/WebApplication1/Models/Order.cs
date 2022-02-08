@@ -22,7 +22,8 @@ namespace WebApplication1.Models
         public string Latitude { get; set; }
         [Display(Name = "Доставляется ли заказ")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Укажите, доставляется ли заказ")]
-        public string delivered { get; set; }
+        public string delivered { get; set; }        //"waiting"/"busy"/"finished"
+
         //public DateTime timeOfMakingOrder { get; set; }
     }
 }

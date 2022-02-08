@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -76,14 +76,18 @@ namespace WebApplication1.Controllers
                 {
                     if (o.address == null)
                         continue;
-                    Mark clientMark = new Mark(o.addressCoordinateLatitude, o.addressCoordinateLongitude, o.id);
+                    if(o.delivered != "waiting")
+                    {
+                        continue;
+                    }
+                    Mark clientMark = new Mark(o.Latitude, o.Longitude, o.id, o.delivered);
                     ClientMarks.Add(clientMark);
                 }
                 foreach (var s in db.Storage)
                 {
                     if (s.storageAddress == null)
                         continue;
-                    Mark storageMark = new Mark(s.coordinateLatitude, s.coordinateLongitude, s.id);
+                    Mark storageMark = new Mark(s.Latitude, s.Longitude, s.id);
                     StorageMarks.Add(storageMark);
                 }
             }
@@ -148,17 +152,26 @@ namespace WebApplication1.Controllers
                 int minDist = int.MaxValue;
                 foreach (var storage in db.Storage)
                 {
-                    var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.coordinateLatitude, storage.coordinateLongitude);
+                    var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);
                     if (bufferDist < minDist)
                     {
-                        start = new Mark(storage.coordinateLatitude, storage.coordinateLongitude, storage.id);
+                        start = new Mark(storage.Latitude, storage.Longitude, storage.id);
                     }
                 }
+                pathFinder.FindPaths(start);
+                var allPaths = pathFinder.GetAllPaths();
+                var bestPath = pathFinder.GetBestPaths(allPaths, 1)[0];
+                foreach (var m in bestPath)
+                {
+                    if(m.Status == "waiting")
+                    {
+                        var order = db.Order.FirstOrDefault(o => o.id == m.ID);
+                        order.delivered = "busy";
+                    }
+                    db.SaveChanges();
+                }
+                return bestPath;
             }
-            pathFinder.FindPaths(start);
-            var allPaths = pathFinder.GetAllPaths();
-            return pathFinder.GetBestPaths(allPaths, 1)[0];
         }
     }
 }
-*/
