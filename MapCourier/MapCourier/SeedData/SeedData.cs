@@ -16,7 +16,7 @@ namespace MapCourier.SeedData
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MapContext>>()))
             {
-                if (context.Order.Any() && context.Storage.Any() && context.User.Any())
+                if (context.Order.Any() && context.Storage.Any())
                 {
                     return;
                 }
@@ -62,24 +62,7 @@ namespace MapCourier.SeedData
                         Latitude = "1",
                         Longitude = "1"
                     }
-                    );
-                context.User.AddRange(
-                    new User
-                    {
-                        Login = "test",
-                        Password = "test"
-                    },
-                    new User
-                    {
-                        Login = "test",
-                        Password = "test"
-                    },
-                    new User
-                    {
-                        Login = "test",
-                        Password = "test"
-                    }
-                    );
+                    );               
                 
                 context.SaveChanges();
             }

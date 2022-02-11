@@ -6,27 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MapCourier.Models;
 using MapCourier.Data;
+using MapCourier.Models;
 
 namespace MapCourier.Controllers
 {
-    public class OredersController : Controller
+    public class OrdersController : Controller
     {
         private readonly MapContext _context;
 
-        public OredersController(MapContext context)
+        public OrdersController(MapContext context)
         {
             _context = context;
         }
 
-        // GET: Oreders
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
             return View(await _context.Order.ToListAsync());
         }
 
-        // GET: Oreders/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,18 +44,18 @@ namespace MapCourier.Controllers
             return View(order);
         }
 
-        // GET: Oreders/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Oreders/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,address,addressCoordinateLongitude,addressCoordinateLatitude")] Order order)
+        public async Task<IActionResult> Create([Bind("id,address,Longitude,Latitude,delivered")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace MapCourier.Controllers
             return View(order);
         }
 
-        // GET: Oreders/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,12 +82,12 @@ namespace MapCourier.Controllers
             return View(order);
         }
 
-        // POST: Oreders/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,address,addressCoordinateLongitude,addressCoordinateLatitude")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("id,address,Longitude,Latitude,delivered")] Order order)
         {
             if (id != order.id)
             {
@@ -117,7 +117,7 @@ namespace MapCourier.Controllers
             return View(order);
         }
 
-        // GET: Oreders/Delete/5
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +135,7 @@ namespace MapCourier.Controllers
             return View(order);
         }
 
-        // POST: Oreders/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

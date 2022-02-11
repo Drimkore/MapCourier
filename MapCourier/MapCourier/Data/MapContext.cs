@@ -15,8 +15,6 @@ public class MapContext : IdentityDbContext
 
         }
 
-        public DbSet<MapCourier.Models.User> User { get; set; }
-
         public DbSet<MapCourier.Models.Order> Order { get; set; }
 
         public DbSet<MapCourier.Models.Storage> Storage { get; set; }

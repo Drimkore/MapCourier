@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MapCourier.Models;
 using MapCourier.Data;
+using MapCourier.Models;
 
 namespace MapCourier.Controllers
 {
@@ -55,7 +55,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,storageName,storageAddress,coordinateLongitude,coordinateLatitude")] Storage storage)
+        public async Task<IActionResult> Create([Bind("id,storageName,storageAddress,Longitude,Latitude")] Storage storage)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,storageName,storageAddress,coordinateLongitude,coordinateLatitude")] Storage storage)
+        public async Task<IActionResult> Edit(int id, [Bind("id,storageName,storageAddress,Longitude,Latitude")] Storage storage)
         {
             if (id != storage.id)
             {
