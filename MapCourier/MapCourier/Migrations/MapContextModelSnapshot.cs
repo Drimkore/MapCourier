@@ -17,9 +17,49 @@ namespace MapCourier.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.2");
 
+            modelBuilder.Entity("MapCourier.Models.Delivery", b =>
+                {
+                    b.Property<int>("DeliveryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OrderID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("StorageID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DeliveryID");
+
+                    b.ToTable("Delivery");
+                });
+
+            modelBuilder.Entity("MapCourier.Models.DeliveryLog", b =>
+                {
+                    b.Property<int>("DeliveryLogID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("OrderID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("StorageID")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DeliveryLogID");
+
+                    b.ToTable("DeliveryLog");
+                });
+
             modelBuilder.Entity("MapCourier.Models.Order", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -35,18 +75,18 @@ namespace MapCourier.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("delivered")
+                    b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("OrderID");
 
                     b.ToTable("Order");
                 });
 
             modelBuilder.Entity("MapCourier.Models.Storage", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("StorageID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -66,7 +106,7 @@ namespace MapCourier.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("StorageID");
 
                     b.ToTable("Storage");
                 });

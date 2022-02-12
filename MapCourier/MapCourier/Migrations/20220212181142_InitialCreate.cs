@@ -49,26 +49,56 @@ namespace MapCourier.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Delivery",
+                columns: table => new
+                {
+                    DeliveryID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
+                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Delivery", x => x.DeliveryID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeliveryLog",
+                columns: table => new
+                {
+                    DeliveryLogID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
+                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryLog", x => x.DeliveryLogID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    OrderID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     address = table.Column<string>(type: "TEXT", nullable: false),
                     Longitude = table.Column<string>(type: "TEXT", nullable: false),
                     Latitude = table.Column<string>(type: "TEXT", nullable: false),
-                    delivered = table.Column<string>(type: "TEXT", nullable: false)
+                    status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.id);
+                    table.PrimaryKey("PK_Order", x => x.OrderID);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Storage",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "INTEGER", nullable: false)
+                    StorageID = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     storageName = table.Column<string>(type: "TEXT", nullable: false),
                     storageAddress = table.Column<string>(type: "TEXT", nullable: false),
@@ -77,7 +107,7 @@ namespace MapCourier.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Storage", x => x.id);
+                    table.PrimaryKey("PK_Storage", x => x.StorageID);
                 });
 
             migrationBuilder.CreateTable(
@@ -240,6 +270,12 @@ namespace MapCourier.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Delivery");
+
+            migrationBuilder.DropTable(
+                name: "DeliveryLog");
 
             migrationBuilder.DropTable(
                 name: "Order");
