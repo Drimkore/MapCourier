@@ -49,36 +49,6 @@ namespace MapCourier.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Delivery",
-                columns: table => new
-                {
-                    DeliveryID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
-                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
-                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Delivery", x => x.DeliveryID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DeliveryLog",
-                columns: table => new
-                {
-                    DeliveryLogID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
-                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
-                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeliveryLog", x => x.DeliveryLogID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
                 {
@@ -216,6 +186,56 @@ namespace MapCourier.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Delivery",
+                columns: table => new
+                {
+                    DeliveryID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
+                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Delivery", x => x.DeliveryID);
+                    table.ForeignKey(
+                        name: "FK_Delivery_Order_OrderID",
+                        column: x => x.OrderID,
+                        principalTable: "Order",
+                        principalColumn: "OrderID");
+                    table.ForeignKey(
+                        name: "FK_Delivery_Storage_StorageID",
+                        column: x => x.StorageID,
+                        principalTable: "Storage",
+                        principalColumn: "StorageID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeliveryLog",
+                columns: table => new
+                {
+                    DeliveryLogID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    StorageID = table.Column<int>(type: "INTEGER", nullable: true),
+                    OrderID = table.Column<int>(type: "INTEGER", nullable: true),
+                    UserID = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DeliveryLog", x => x.DeliveryLogID);
+                    table.ForeignKey(
+                        name: "FK_DeliveryLog_Order_OrderID",
+                        column: x => x.OrderID,
+                        principalTable: "Order",
+                        principalColumn: "OrderID");
+                    table.ForeignKey(
+                        name: "FK_DeliveryLog_Storage_StorageID",
+                        column: x => x.StorageID,
+                        principalTable: "Storage",
+                        principalColumn: "StorageID");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -252,6 +272,26 @@ namespace MapCourier.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Delivery_OrderID",
+                table: "Delivery",
+                column: "OrderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Delivery_StorageID",
+                table: "Delivery",
+                column: "StorageID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeliveryLog_OrderID",
+                table: "DeliveryLog",
+                column: "OrderID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeliveryLog_StorageID",
+                table: "DeliveryLog",
+                column: "StorageID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -278,16 +318,16 @@ namespace MapCourier.Migrations
                 name: "DeliveryLog");
 
             migrationBuilder.DropTable(
-                name: "Order");
-
-            migrationBuilder.DropTable(
-                name: "Storage");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Order");
+
+            migrationBuilder.DropTable(
+                name: "Storage");
         }
     }
 }

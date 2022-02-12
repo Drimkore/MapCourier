@@ -34,6 +34,10 @@ namespace MapCourier.Migrations
 
                     b.HasKey("DeliveryID");
 
+                    b.HasIndex("OrderID");
+
+                    b.HasIndex("StorageID");
+
                     b.ToTable("Delivery");
                 });
 
@@ -53,6 +57,10 @@ namespace MapCourier.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("DeliveryLogID");
+
+                    b.HasIndex("OrderID");
+
+                    b.HasIndex("StorageID");
 
                     b.ToTable("DeliveryLog");
                 });
@@ -305,6 +313,36 @@ namespace MapCourier.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("MapCourier.Models.Delivery", b =>
+                {
+                    b.HasOne("MapCourier.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID");
+
+                    b.HasOne("MapCourier.Models.Storage", "Storage")
+                        .WithMany()
+                        .HasForeignKey("StorageID");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Storage");
+                });
+
+            modelBuilder.Entity("MapCourier.Models.DeliveryLog", b =>
+                {
+                    b.HasOne("MapCourier.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderID");
+
+                    b.HasOne("MapCourier.Models.Storage", "Storage")
+                        .WithMany()
+                        .HasForeignKey("StorageID");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
