@@ -35,7 +35,7 @@ namespace MapCourier.Controllers
             }
 
             var order = await _context.Order
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.OrderID == id);
             if (order == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,address,Longitude,Latitude,delivered")] Order order)
         {
-            if (id != order.id)
+            if (id != order.OrderID)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace MapCourier.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrderExists(order.id))
+                    if (!OrderExists(order.OrderID))
                     {
                         return NotFound();
                     }
@@ -126,7 +126,7 @@ namespace MapCourier.Controllers
             }
 
             var order = await _context.Order
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.OrderID == id);
             if (order == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace MapCourier.Controllers
 
         private bool OrderExists(int id)
         {
-            return _context.Order.Any(e => e.id == id);
+            return _context.Order.Any(e => e.OrderID == id);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace MapCourier.Controllers
             }
 
             var storage = await _context.Storage
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.StorageID == id);
             if (storage == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,storageName,storageAddress,Longitude,Latitude")] Storage storage)
         {
-            if (id != storage.id)
+            if (id != storage.StorageID)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace MapCourier.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StorageExists(storage.id))
+                    if (!StorageExists(storage.StorageID))
                     {
                         return NotFound();
                     }
@@ -126,7 +126,7 @@ namespace MapCourier.Controllers
             }
 
             var storage = await _context.Storage
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.StorageID == id);
             if (storage == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace MapCourier.Controllers
 
         private bool StorageExists(int id)
         {
-            return _context.Storage.Any(e => e.id == id);
+            return _context.Storage.Any(e => e.StorageID == id);
         }
     }
 }

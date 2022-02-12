@@ -76,18 +76,18 @@ namespace MapCourier.Controllers
                 {
                     if (o.address == null)
                         continue;
-                    if(o.delivered != "waiting")
+                    if(o.status != "waiting")
                     {
                         continue;
                     }
-                    Mark clientMark = new Mark(o.Latitude, o.Longitude, o.id, o.delivered);
+                    Mark clientMark = new Mark(o.Latitude, o.Longitude, o.OrderID, o.status);
                     ClientMarks.Add(clientMark);
                 }
                 foreach (var s in db.Storage)
                 {
                     if (s.storageAddress == null)
                         continue;
-                    Mark storageMark = new Mark(s.Latitude, s.Longitude, s.id);
+                    Mark storageMark = new Mark(s.Latitude, s.Longitude, s.StorageID);
                     StorageMarks.Add(storageMark);
                 }
             }
@@ -155,7 +155,7 @@ namespace MapCourier.Controllers
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);
                     if (bufferDist < minDist)
                     {
-                        start = new Mark(storage.Latitude, storage.Longitude, storage.id);
+                        start = new Mark(storage.Latitude, storage.Longitude, storage.StorageID);
                     }
                 }
                 pathFinder.FindPaths(start);
@@ -165,8 +165,8 @@ namespace MapCourier.Controllers
                 {
                     if(m.Status == "waiting")
                     {
-                        var order = db.Order.FirstOrDefault(o => o.id == m.ID);
-                        order.delivered = "busy";
+                        var order = db.Order.FirstOrDefault(o => o.OrderID == m.ID);
+                        order.status = "busy";
                     }
                     db.SaveChanges();
                 }

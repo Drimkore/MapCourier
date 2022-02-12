@@ -26,19 +26,19 @@ namespace MapCourier.SeedData
                     {   address = "Test",
                         Longitude = "1",
                         Latitude = "1",
-                        delivered = "yes"
+                        status = "yes"
                     },
                     new Order
                     {   address = "Test",
                         Longitude = "1",
                         Latitude = "1",
-                        delivered = "no"
+                        status = "no"
                     },
                     new Order
                     {   address = "Test",
                         Longitude = "1",
                         Latitude = "1",
-                        delivered = "yes"
+                        status = "yes"
                     });
                 context.Storage.AddRange(
                     new Storage

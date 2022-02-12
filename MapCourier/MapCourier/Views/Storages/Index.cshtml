@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Latitude)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StorageID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.StorageID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.StorageID">Delete</a>
             </td>
         </tr>
 }

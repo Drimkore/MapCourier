@@ -6,7 +6,7 @@ namespace MapCourier.Models
     {
         [Key]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходим id")]
-        public int id { get; set; }
+        public int StorageID { get; set; }
         [Display(Name = "Название склада")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходимо название склада")]
         public string storageName { get; set; }
