@@ -4,9 +4,11 @@
     ViewData["Title"] = "Ваш склад";
 }
 
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
-<title>Display a map on a webpage</title>
+<title>Display navigation directions</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
@@ -16,15 +18,36 @@ body { margin: 0; padding: 0; }
 </style>
 </head>
 <body>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
 <div id="map"></div>
+
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
 const map = new mapboxgl.Map({
-container: 'map', // container ID
-style: 'mapbox://styles/mapbox/streets-v11', // style URL
-center: [-74.5, 40], // starting position [lng, lat]
-zoom: 9 // starting zoom
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+zoom: 13
 });
+
+
+var directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+});
+map.addControl(directions,'top-left');
+
+map.on('load', function() {
+    if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+    }
+})
+
+function showPosition(position) {
+    directions.setOrigin([position.coords.longitude, position.coords.latitude]);
+    directions.setDestination([60.654105, 56.844097]);
+}
+
 </script>
  
 </body>
+</html>
