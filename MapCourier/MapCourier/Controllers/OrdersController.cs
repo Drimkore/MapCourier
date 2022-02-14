@@ -55,7 +55,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,address,Longitude,Latitude,delivered")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,address,Longitude,Latitude,status")] Order order)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,address,Longitude,Latitude,delivered")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,address,Longitude,Latitude,status")] Order order)
         {
             if (id != order.OrderID)
             {
