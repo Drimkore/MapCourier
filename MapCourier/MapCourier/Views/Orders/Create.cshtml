@@ -14,22 +14,23 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
+                <input id = "orderInput" asp-for="address" class="form-control" />
+                <button type = "button" id="buttonOrder" class="btn btn-primary">Обработать адрес</button>
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
+                <input id = "inputLong" asp-for="Longitude" class="form-control" readonly/>
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
+                <input id = "inputLat" asp-for="Latitude" class="form-control" readonly/>
                 <span asp-validation-for="Latitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="status" class="control-label"></label>
-                <input asp-for="status" class="form-control" />
+                <input id = "inputDeliver" asp-for="status" class="form-control" readonly/>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -45,4 +46,22 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.getElementById("buttonOrder").addEventListener("click", collectData);
+        async function collectData() {
+            var requestURL = 'https://nominatim.openstreetmap.org/search/'+document.getElementById("orderInput").value+'?format=jsonv2&limit=1'
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+            request.onload = function () {
+                data = request.response;
+                var data_address = JSON.parse(JSON.stringify(data));
+                document.getElementById("orderInput").value = data[0].display_name;
+                document.getElementById("inputLong").value = data[0].lat;
+                document.getElementById("inputLat").value = data[0].lon;
+                document.getElementById("inputDeliver").value = "На складе";
+            }
+        }
+    </script>
 }
