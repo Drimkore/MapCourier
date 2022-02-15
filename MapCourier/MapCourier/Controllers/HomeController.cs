@@ -15,6 +15,9 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        //if (User.Identity.IsAuthenticated) { return View(); }  РУКАМИ НЕ ТРОГАТЬ
+        //else { return NotFound();
+        //}
         return View();
     }
 
