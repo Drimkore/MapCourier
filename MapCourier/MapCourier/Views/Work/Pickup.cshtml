@@ -37,14 +37,17 @@ container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
 center: [60.619931, 56.830317],
 zoom: 9,
-maxZoom: 14
+maxZoom: 14,
+interactive: 'false'
 });
 
 
 var directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
     unit: 'metric',
-    profice: 'mapbox/driving'
+    profice: 'mapbox/driving',
+    language: 'ru',
+    interactive: 'false'
 });
 map.addControl(directions,'top-left');
 
