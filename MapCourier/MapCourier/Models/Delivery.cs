@@ -12,7 +12,7 @@ namespace MapCourier.Models
         public Storage Storage { get; set; } 
         public int? OrderID { get; set; }
         public Order Order { get; set; }
-        public int? UserID { get; set; }     
+        public string? UserID { get; set; }     
 
     }
 }

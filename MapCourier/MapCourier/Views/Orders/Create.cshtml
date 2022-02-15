@@ -15,22 +15,22 @@
             <div class="form-group">
                 <label asp-for="address" class="control-label"></label>
                 <input id = "orderInput" asp-for="address" class="form-control" />
-                <button type = "button" id="buttonOrder" class="btn btn-primary">РћР±СЂР°Р±РѕС‚Р°С‚СЊ Р°РґСЂРµСЃ</button>
+                <button type = "button" id="buttonOrder" class="btn btn-primary">Обработать адрес</button>
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Longitude" class="control-label"></label>
-                <input id = "inputLong" asp-for="Longitude" class="form-control" disabled = "disabled" />
+                <input id = "inputLong" asp-for="Longitude" class="form-control" readonly/>
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Latitude" class="control-label"></label>
-                <input id = "inputLat" asp-for="Latitude" class="form-control" disabled = "disabled" />
+                <input id = "inputLat" asp-for="Latitude" class="form-control" readonly/>
                 <span asp-validation-for="Latitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="status" class="control-label"></label>
-                <input id = "inputDeliver" asp-for="status" class="form-control" disabled = "disabled" />
+                <input id = "inputDeliver" asp-for="status" class="form-control" readonly/>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,7 +60,7 @@
                 document.getElementById("orderInput").value = data[0].display_name;
                 document.getElementById("inputLong").value = data[0].lat;
                 document.getElementById("inputLat").value = data[0].lon;
-                document.getElementById("inputDeliver").value = "РќР° СЃРєР»Р°РґРµ";
+                document.getElementById("inputDeliver").value = "На складе";
             }
         }
     </script>

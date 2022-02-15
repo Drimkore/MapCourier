@@ -29,8 +29,8 @@ namespace MapCourier.Migrations
                     b.Property<int?>("StorageID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("DeliveryID");
 
@@ -53,8 +53,8 @@ namespace MapCourier.Migrations
                     b.Property<int?>("StorageID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserID")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("DeliveryLogID");
 
