@@ -3,40 +3,52 @@
 @{
     ViewData["Title"] = "Details";
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Order</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.address)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.status)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.status)
-        </dd>
-    </dl>
+<div class="diva">
+       <h1>Details Order</h1>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.OrderID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="diva">
+    <table>
+        <tr>
+            <th >
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.address)
+            </td>
+            
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Longitude)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Latitude)
+            </td>
+        </tr>
+        <tr>
+           <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.status)
+            </td>
+        </tr>
+     
+    </table>
+
+
+
+<div >
+    <a asp-action="Edit" asp-route-id="@Model?.OrderID" class="floating-button">Edit</a>
+    <a asp-action="Index" class="floating-button">Back to List</a>
+</div>
 </div>
