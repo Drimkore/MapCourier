@@ -2,6 +2,8 @@
 using MapCourier.Data;
 using MapCourier.Models;
 using MapCourier.Controllers;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace MapCourier.Controllers
 {
@@ -13,7 +15,7 @@ namespace MapCourier.Controllers
         {
             _context = context;
         }
-        private OrdersMarks Marks;
+
         public IActionResult Index()
         {
             return View();
@@ -21,7 +23,24 @@ namespace MapCourier.Controllers
         [HttpPost]
         public IActionResult Index(string latitude, string longitude) 
         {
-            Marks = new(FinalResult.GetResultPath(latitude, longitude));
+            var marks = FinalResult.GetResultPath(latitude, longitude);
+            Delivery delivery = new();
+            delivery.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            foreach (var m in marks)
+            {
+                delivery.OrderID = null;
+                if (m.Status == "storage")
+                {
+                    delivery.StorageID = m.ID;
+                }
+                if(m.Status == "busy")
+                {
+                    delivery.OrderID = m.ID;
+                    _context.Delivery.Add(delivery);
+                }
+            }
+            _context.Delivery.Add(delivery);
+            _context.SaveChanges();
             return View();
             
         }
@@ -33,7 +52,9 @@ namespace MapCourier.Controllers
 
         public IActionResult Pickup()
         {
-            return View(Marks);
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var order = _context.Delivery.FirstOrDefault(d => d.UserID == user);
+            return View(order);
         }
         //[HttpPost]
         //public IActionResult Pickup()
@@ -42,17 +63,16 @@ namespace MapCourier.Controllers
         //}
         public IActionResult Deliver()
         {
-
-            var mark = Marks.GetMark();
-            if (mark.Status == "busy")
-            {
-                mark.Status = "finished";
-                var order = _context.Order.FirstOrDefault(o => o.OrderID == mark.ID);
-                order.status = "finished";
-                _context.SaveChangesAsync();
-            }
-            Marks.Next();
-            return View(Marks);
+            //var mark = Marks.GetMark();
+            //if (mark.Status == "busy")
+            //{
+            //    mark.Status = "finished";
+            //    var order = _context.Order.FirstOrDefault(o => o.OrderID == mark.ID);
+            //    order.status = "finished";
+            //    _context.SaveChangesAsync();
+            //}
+            //Marks.Next();
+            return View();
         }
     }
 }

@@ -11,7 +11,6 @@ public class HomeController : Controller
 
     public HomeController(ILogger<HomeController> logger)
     {
-        //var sdsdsdsdsd = FinalResult.GetResultPath("50", "50");
         _logger = logger;
     }
     public IActionResult Index(string action)
