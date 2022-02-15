@@ -1,4 +1,4 @@
-﻿@model MapCourier.Models.Storage
+﻿@model OrdersMarks
 
 @{
     ViewData["Title"] = "Ваш склад";
@@ -44,7 +44,7 @@ map.on('load', function() {
 
 function showPosition(position) {
     directions.setOrigin([position.coords.longitude, position.coords.latitude]);
-    directions.setDestination([60.654105, 56.844097]);
+    directions.setDestination([@Model.GetMark().Y, @Model.GetMark().X]);
 }
 
 </script>
