@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MapCourier.Models;
+using MapCourier.Controllers;
 
 namespace MapCourier.Controllers;
 
@@ -12,9 +13,13 @@ public class HomeController : Controller
     {
         _logger = logger;
     }
-
-    public IActionResult Index()
+    public IActionResult Index(string action)
     {
+        if(action == "work")
+            return Redirect("../Work/Index");
+        //if (User.Identity.IsAuthenticated) { return View(); }  РУКАМИ НЕ ТРОГАТЬ
+        //else { return NotFound();
+        //}
         return View();
     }
 

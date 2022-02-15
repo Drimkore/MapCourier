@@ -165,6 +165,7 @@ namespace MapCourier.Controllers
                 {
                     if(m.Status == "waiting")
                     {
+                        m.Status = "busy";
                         var order = db.Order.FirstOrDefault(o => o.OrderID == m.ID);
                         order.status = "busy";
                     }

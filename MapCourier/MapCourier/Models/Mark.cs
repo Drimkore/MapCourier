@@ -15,7 +15,7 @@ namespace MapCourier.Models
         public double PastMarkDist;
         public List<Mark> NearMarks = new List<Mark>();
         public double NearMarkDist;
-        public readonly string? Status; //"waiting"/"busy"/"finished"
+        public string? Status; //"waiting"/"busy"/"finished"
         public Mark(string x, string y, int id, string status)
         {
             X = x;
@@ -61,6 +61,24 @@ namespace MapCourier.Models
                 return -1;
             else
                 return 0;
+        }
+    }
+    public class OrdersMarks
+    {
+        public List<Mark>? Marks { get; set; }
+        private int Iteration { get; set; }
+        public OrdersMarks(List<Mark> marks)
+        {
+            Marks = marks;
+            Iteration = 0;
+        }
+        public void Next()
+        {
+            Iteration++;
+        }
+        public Mark GetMark()
+        {
+            return Marks[Iteration];
         }
     }
 }
