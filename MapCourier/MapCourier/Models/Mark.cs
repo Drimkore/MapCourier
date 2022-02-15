@@ -63,4 +63,14 @@ namespace MapCourier.Models
                 return 0;
         }
     }
+    public class OrdersMarks
+    {
+        //public List<Mark>? Marks { get; set; }
+        //public int Iteration { get; set; }
+        //public OrdersMarks(List<Mark> marks)
+        //{
+        //    Marks = marks;
+        //    Iteration = 0;
+        //}
+    }
 }
