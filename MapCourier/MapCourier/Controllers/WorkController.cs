@@ -18,9 +18,7 @@ namespace MapCourier.Controllers
 
         public IActionResult Index()
         {
-            if (!User.Identity.IsAuthenticated){
-                return NotFound();
-            }
+            
             if (!_context.Order.Where(o => o.status == "waiting").Any())
             {
                 return Redirect("../Work/Finish");
@@ -77,9 +75,6 @@ namespace MapCourier.Controllers
         [HttpPost]
         public IActionResult RedirectToPickup()
         {
-            if (!User.Identity.IsAuthenticated){
-                return NotFound();
-            }
             return Redirect("../Work/Pickup");
         }
 
@@ -116,7 +111,7 @@ namespace MapCourier.Controllers
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
             if (delivery == null)
             {
-                return NotFound();
+                return Redirect("../Work/Finish");
             }
             if (delivery.OrderID == null)
             {
@@ -128,6 +123,10 @@ namespace MapCourier.Controllers
             _context.Delivery.Remove(delivery);
             _context.SaveChanges();
             return View(order);
+        }
+        public IActionResult Finish()
+        { 
+        return View();
         }
     }
 }
