@@ -35,12 +35,16 @@ body { margin: 0; padding: 0; }
 const map = new mapboxgl.Map({
 container: 'map',
 style: 'mapbox://styles/mapbox/streets-v11',
-zoom: 9
+center: [60.619931, 56.830317],
+zoom: 9,
+maxZoom: 14
 });
 
 
 var directions = new MapboxDirections({
-    accessToken: mapboxgl.accessToken
+    accessToken: mapboxgl.accessToken,
+    unit: 'metric',
+    profice: 'mapbox/driving'
 });
 map.addControl(directions,'top-left');
 
