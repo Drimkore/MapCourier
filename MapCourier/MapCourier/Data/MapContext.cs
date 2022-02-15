@@ -14,8 +14,15 @@ public class MapContext : IdentityDbContext
         {
 
         }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
 
-        public DbSet<MapCourier.Models.Order> Order { get; set; }
+            optionsBuilder.UseSqlite(@"DataSource=app.db");
+        }
+    }
+    public DbSet<MapCourier.Models.Order> Order { get; set; }
 
         public DbSet<MapCourier.Models.Storage> Storage { get; set; }
 

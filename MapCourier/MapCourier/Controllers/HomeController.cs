@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MapCourier.Models;
+using MapCourier.Controllers;
 
 namespace MapCourier.Controllers;
 
@@ -10,6 +11,7 @@ public class HomeController : Controller
 
     public HomeController(ILogger<HomeController> logger)
     {
+        //var sdsdsdsdsd = FinalResult.GetResultPath("50", "50");
         _logger = logger;
     }
     public IActionResult Index(string action)
