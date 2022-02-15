@@ -66,7 +66,7 @@ namespace MapCourier.Controllers
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
             if (delivery == null)
             {
-                return NotFound();
+                return Redirect("../Work/Finish");
             }
             if(delivery.OrderID == null)
             {
@@ -88,6 +88,8 @@ namespace MapCourier.Controllers
                 return Redirect("../Work/Pickup");
             }
             var order = _context.Order.FirstOrDefault(s => s.OrderID == delivery.OrderID);
+            order.status = "finished";
+            _context.Order.Update(order);
             _context.Delivery.Remove(delivery);
             _context.SaveChanges();
             return View(order);
