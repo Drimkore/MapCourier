@@ -1,4 +1,4 @@
-﻿@model List<Delivery>
+﻿@model List<Order>?
 
 @{
     ViewData["Title"] = "Выбор заказа";
@@ -10,39 +10,34 @@
   <div class="card-header">
     Выбор заказов
   </div>
-  <ol class="square">
-    <li>Заказ</li>
-    <li>Заказ</li>
-    <li>Заказ</li>
-  </ol>
-  <div>
-  <button class="floating-button">
-            Проверка
-        </button>
-  <button class="floating-button">
-            Проверка2
-  </button>
-    
-  </div>
-  </div>
-
-
-<form method="post" action="~/Work/Index">
+  @if (Model!=null && Model.Any())
+        {
+            <ol class="square">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <li>@Model[i].address</li>}
+            </ol>
+        }
+        <div>
+  <form method="post" action="~/Work/Index">
     <input type="text" id = "lat" name="latitude" hidden/><br />
     <input type="text" id = "lon" name="longitude" hidden/><br />
-    <input type="submit" value="Get orders" />
+    <input id = "getOrders" class="floating-button" type="submit" value="Get orders" />
 </form>
-
-
-
   <form method="post" action="~/Work/RedirectToPickup">
-    <input type="submit" value="Accept orders" />
-</form>
-
+    <input class="floating-button" type="submit" value="Accept orders" />
+</form> 
+  </div>
+  </div>
 </body>
 
 
   @section Scripts {
+      @if (Model!=null && Model.Any()){
+          <script>
+          document.getElementById("getOrders").disabled = true;
+           </script>
+      }
   <script>
       
       if (navigator.geolocation) {
