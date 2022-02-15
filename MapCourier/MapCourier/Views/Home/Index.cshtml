@@ -8,8 +8,16 @@
 </div>
 
 
-
-<form method="post" action="~/Home/Index">
+@if (User.Identity.IsAuthenticated)
+{
+    <form method="post" action="~/Home/Index">
     <input type="text" name="action" value = "work" hidden/><br />
-    <input type="submit" value="Отправить" />
+    <input type="submit" value="Начать работу" />
 </form>
+     <form method="get" action="../Orders/">
+    <input type="submit" value="Работа с заказами" />
+</form>
+    <form method="get" action="../Storages/">
+    <input type="submit" value="Работа со складами" />
+</form>
+}

@@ -1,4 +1,4 @@
-﻿@model MapCourier.Models.Order
+﻿@model List<Order>?
 
 @{
     ViewData["Title"] = "Выбор заказа";
@@ -10,25 +10,36 @@
   <div class="card-header">
     Выбор заказов
   </div>
-  <ol class="square">
-    <li>Заказ</li>
-    <li>Заказ</li>
-    <li>Заказ</li>
-  </ol>
-  <div>
-  <button class="floating-button">
-            Проверка
-        </button>
-  <button class="floating-button">
-            Проверка2
-  </button>
-    
+  @if (Model!=null && Model.Any())
+        {
+            <ol class="square">
+                @for (int i = 0; i < Model.Count(); i++)
+                {
+                    <li>@Model[i].address</li>}
+            </ol>
+        }
+        <div>
+  <form method="post" action="~/Work/Index">
+    <input type="text" id = "lat" name="latitude" hidden/><br />
+    <input type="text" id = "lon" name="longitude" hidden/><br />
+    <input id = "getOrders" class="floating-button" type="submit" value="Get orders" />
+</form>
+  <form method="post" action="~/Work/RedirectToPickup">
+    <input class="floating-button" type="submit" value="Accept orders" />
+</form> 
   </div>
   </div>
-  @section Scripts {
-  <script>
-      document.getElementById("checkButton").addEventListener("click", collectData);
-      async function collectData() {
+</body>
+
+
+ @section Scripts {
+     @if (Model!=null && Model.Any()){
+         <script>
+         document.getElementById("getOrders").disabled = true;
+          </script>
+     }
+ <script>
+      
       if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
       }
@@ -36,21 +47,6 @@
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("lon").value = position.coords.longitude;
       }
-      }
-  </script>
-  }
-  <button type = "button" id = "checkButton"> Get Coords </button>
-
-<form method="post" action="~/Work/Index">
-    <input type="text" id = "lat" name="latitude" /><br />
-    <input type="text" id = "lon" name="longitude" /><br />
-    <input type="submit" value="Check" />
-</form>
-
-
-
-  <form method="post" action="~/Work/RedirectToPickup">
-    <input type="submit" value="Redirect" />
-</form>
-
-</body>
+      
+ </script>
+ }

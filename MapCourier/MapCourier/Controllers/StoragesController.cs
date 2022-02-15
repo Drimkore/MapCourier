@@ -23,12 +23,18 @@ namespace MapCourier.Controllers
         // GET: Storages
         public async Task<IActionResult> Index()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             return View(await _context.Storage.ToListAsync());
         }
 
         // GET: Storages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -47,6 +53,9 @@ namespace MapCourier.Controllers
         // GET: Storages/Create
         public IActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             return View();
         }
 
@@ -57,6 +66,9 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("StorageID,storageName,storageAddress,Longitude,Latitude")] Storage storage)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(storage);
@@ -69,6 +81,9 @@ namespace MapCourier.Controllers
         // GET: Storages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -89,6 +104,9 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("StorageID,storageName,storageAddress,Longitude,Latitude")] Storage storage)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id != storage.StorageID)
             {
                 return NotFound();
@@ -120,6 +138,9 @@ namespace MapCourier.Controllers
         // GET: Storages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -140,6 +161,9 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             var storage = await _context.Storage.FindAsync(id);
             _context.Storage.Remove(storage);
             await _context.SaveChangesAsync();

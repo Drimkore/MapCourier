@@ -150,6 +150,8 @@ namespace MapCourier.Controllers
             using (var db = new MapContext())
             {
                 int minDist = int.MaxValue;
+                if (!db.Storage.Any())
+                    new NullReferenceException();
                 foreach (var storage in db.Storage)
                 {
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);

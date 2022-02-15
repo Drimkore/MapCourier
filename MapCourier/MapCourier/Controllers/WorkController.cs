@@ -18,17 +18,31 @@ namespace MapCourier.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            
+            if (!_context.Order.Where(o => o.status == "waiting").Any())
+            {
+                return Redirect("../Work/Finish");
+            }
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            if (_context.Delivery.Where(d => d.UserID == user).Any())
+            {
+                return Redirect("../Work/Pickup");
+            }
+                return View();
         }
         [HttpPost]
         public IActionResult Index(string latitude, string longitude) 
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             var marks = FinalResult.GetResultPath(latitude, longitude);
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             int? storage = 0;
             foreach (var m in marks)
             {
                 Delivery d = new();
-                d.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                d.UserID = user;
                 d.OrderID = null;
                 if (m.Status == "storage")
                 {
@@ -44,11 +58,18 @@ namespace MapCourier.Controllers
 
             _context.Delivery.Add(new Delivery() 
             {
-                UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserID = user,
                 StorageID = marks.Last().ID
             });
             _context.SaveChanges();
-            return View();
+            var orders = new List<Order>();
+            foreach(var m in marks)
+            {
+                if (m.Status == "storage")
+                    continue;
+                orders.Add(_context.Order.FirstOrDefault(o => o.OrderID == m.ID));
+            }
+            return View(orders);
             
         }
         [HttpPost]
@@ -59,6 +80,9 @@ namespace MapCourier.Controllers
 
         public IActionResult Pickup(string action)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
 
             Storage storage = new Storage();
             if (action == "redirect")
@@ -79,21 +103,30 @@ namespace MapCourier.Controllers
 
         public IActionResult Deliver()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
             if (delivery == null)
             {
-                return NotFound();
+                return Redirect("../Work/Finish");
             }
             if (delivery.OrderID == null)
             {
                 return Redirect("../Work/Pickup");
             }
             var order = _context.Order.FirstOrDefault(s => s.OrderID == delivery.OrderID);
+            order.status = "finished";
+            _context.Order.Update(order);
             _context.Delivery.Remove(delivery);
             _context.SaveChanges();
             return View(order);
+        }
+        public IActionResult Finish()
+        { 
+        return View();
         }
     }
 }

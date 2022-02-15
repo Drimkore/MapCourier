@@ -23,6 +23,10 @@ namespace MapCourier.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
+
             return View(await _context.Order.ToListAsync());
         }
 
@@ -31,6 +35,10 @@ namespace MapCourier.Controllers
         {
             if (id == null)
             {
+                return NotFound();
+            }
+
+            if (!User.Identity.IsAuthenticated){
                 return NotFound();
             }
 
@@ -47,6 +55,9 @@ namespace MapCourier.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             return View();
         }
 
@@ -57,6 +68,9 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("OrderID,address,Longitude,Latitude,status")] Order order)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (ModelState.IsValid)
             {
                 _context.Add(order);
@@ -69,6 +83,9 @@ namespace MapCourier.Controllers
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
@@ -89,6 +106,9 @@ namespace MapCourier.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("OrderID,address,Longitude,Latitude,status")] Order order)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id != order.OrderID)
             {
                 return NotFound();
@@ -120,6 +140,9 @@ namespace MapCourier.Controllers
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (id == null)
             {
                 return NotFound();
