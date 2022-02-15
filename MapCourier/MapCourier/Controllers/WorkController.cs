@@ -32,10 +32,12 @@ namespace MapCourier.Controllers
                 if (m.Status == "storage")
                 {
                     delivery.StorageID = m.ID;
+                    delivery.Storage = _context.Storage.FirstOrDefault(s => s.StorageID == m.ID);
                 }
                 if(m.Status == "busy")
                 {
                     delivery.OrderID = m.ID;
+                    delivery.Order = _context.Order.FirstOrDefault(s => s.OrderID == m.ID);
                     _context.Delivery.Add(delivery);
                 }
             }
