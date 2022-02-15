@@ -55,8 +55,9 @@ namespace MapCourier.Controllers
         public IActionResult Pickup()
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var order = _context.Delivery.FirstOrDefault(d => d.UserID == user);
-            return View(order);
+            var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
+            var storage = _context.Storage.FirstOrDefault(s => s.StorageID == delivery.StorageID);
+            return View(storage);
         }
         //[HttpPost]
         //public IActionResult Pickup()
