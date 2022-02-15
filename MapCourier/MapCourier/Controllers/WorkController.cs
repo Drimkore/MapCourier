@@ -24,11 +24,12 @@ namespace MapCourier.Controllers
         public IActionResult Index(string latitude, string longitude) 
         {
             var marks = FinalResult.GetResultPath(latitude, longitude);
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             int? storage = 0;
             foreach (var m in marks)
             {
                 Delivery d = new();
-                d.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                d.UserID = user;
                 d.OrderID = null;
                 if (m.Status == "storage")
                 {
@@ -44,11 +45,18 @@ namespace MapCourier.Controllers
 
             _context.Delivery.Add(new Delivery() 
             {
-                UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                UserID = user,
                 StorageID = marks.Last().ID
             });
             _context.SaveChanges();
-            return View();
+            var orders = new List<Order>();
+            foreach(var m in marks)
+            {
+                if (m.Status == "storage")
+                    continue;
+                orders.Add(_context.Order.FirstOrDefault(o => o.OrderID == m.ID));
+            }
+            return View(orders);
             
         }
         [HttpPost]
