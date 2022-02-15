@@ -32,13 +32,13 @@
 </body>
 
 
-  @section Scripts {
-      @if (Model!=null && Model.Any()){
-          <script>
-          document.getElementById("getOrders").disabled = true;
-           </script>
-      }
-  <script>
+ @section Scripts {
+     @if (Model!=null && Model.Any()){
+         <script>
+         document.getElementById("getOrders").disabled = true;
+          </script>
+     }
+ <script>
       
       if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
@@ -48,5 +48,5 @@
       document.getElementById("lon").value = position.coords.longitude;
       }
       
-  </script>
-  }
+ </script>
+ }
