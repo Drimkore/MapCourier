@@ -28,5 +28,32 @@
     
   </div>
   </div>
+  @section Scripts {
+  <script>
+      document.getElementById("checkButton").addEventListener("click", collectData);
+      async function collectData() {
+      if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+      }
+      function showPosition(position) {
+      document.getElementById("lat").value = position.coords.latitude;
+      document.getElementById("lon").value = position.coords.longitude;
+      }
+      }
+  </script>
+  }
+  <button type = "button" id = "checkButton"> Get Coords </button>
+
+<form method="post" action="~/Work/Index">
+    <input type="text" id = "lat" name="latitude" /><br />
+    <input type="text" id = "lon" name="longitude" /><br />
+    <input type="submit" value="Check" />
+</form>
+
+
+
+  <form method="post" action="~/Work/RedirectToPickup">
+    <input type="submit" value="Redirect" />
+</form>
 
 </body>
