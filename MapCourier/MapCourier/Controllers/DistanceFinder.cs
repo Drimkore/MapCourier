@@ -50,20 +50,20 @@ namespace MapCourier.Controllers
         }
         public static double GetMapsDistance(Mark mark1, Mark mark2)
         {
-            var mark1X = Convert.ToDouble(mark1.X);
-            var mark1Y = Convert.ToDouble(mark1.Y);
-            var mark2X = Convert.ToDouble(mark2.X);
-            var mark2Y = Convert.ToDouble(mark2.Y);
+            var mark1X = Convert.ToDouble(mark1.X.Replace('.', ','));
+            var mark1Y = Convert.ToDouble(mark1.Y.Replace('.', ','));
+            var mark2X = Convert.ToDouble(mark2.X.Replace('.', ','));
+            var mark2Y = Convert.ToDouble(mark2.Y.Replace('.', ','));
             var lengthX = mark1X - mark2X;
             var lengthY = mark1Y - mark2Y;
             return Math.Sqrt(lengthX * lengthX + lengthY * lengthY);
         }
         public static double GetMapsDistance(string x1, string y1, string x2, string y2)
         {
-            var mark1X = Convert.ToDouble(x1);
-            var mark1Y = Convert.ToDouble(y1);
-            var mark2X = Convert.ToDouble(x2);
-            var mark2Y = Convert.ToDouble(y2);
+            var mark1X = Convert.ToDouble(x1.Replace('.',','));
+            var mark1Y = Convert.ToDouble(y1.Replace('.',','));
+            var mark2X = Convert.ToDouble(x2.Replace('.',','));
+            var mark2Y = Convert.ToDouble(y2.Replace('.',','));
             var lengthX = mark1X - mark2X;
             var lengthY = mark1Y - mark2Y;
             return Math.Sqrt(lengthX * lengthX + lengthY * lengthY);
