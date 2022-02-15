@@ -24,23 +24,25 @@ namespace MapCourier.Controllers
         public IActionResult Index(string latitude, string longitude) 
         {
             var marks = FinalResult.GetResultPath(latitude, longitude);
-            Delivery delivery = new();
-            delivery.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             foreach (var m in marks)
             {
-                delivery.OrderID = null;
+                Delivery d = new();
+                d.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                d.OrderID = null;
                 if (m.Status == "storage")
                 {
-                    delivery.StorageID = m.ID;
-                    delivery.Storage = _context.Storage.FirstOrDefault(s => s.StorageID == m.ID);
+                    d.StorageID = m.ID;
+                    d.Storage = _context.Storage.FirstOrDefault(s => s.StorageID == m.ID);
                 }
                 if(m.Status == "busy")
                 {
-                    delivery.OrderID = m.ID;
-                    delivery.Order = _context.Order.FirstOrDefault(s => s.OrderID == m.ID);
-                    _context.Delivery.Add(delivery);
+                    d.OrderID = m.ID;
+                    d.Order = _context.Order.FirstOrDefault(s => s.OrderID == m.ID);
                 }
             }
+            Delivery delivery = new();
+            delivery.UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             _context.Delivery.Add(delivery);
             _context.SaveChanges();
             return View();
