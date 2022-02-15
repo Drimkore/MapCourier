@@ -65,12 +65,20 @@ namespace MapCourier.Models
     }
     public class OrdersMarks
     {
-        //public List<Mark>? Marks { get; set; }
-        //public int Iteration { get; set; }
-        //public OrdersMarks(List<Mark> marks)
-        //{
-        //    Marks = marks;
-        //    Iteration = 0;
-        //}
+        public List<Mark>? Marks { get; set; }
+        private int Iteration { get; set; }
+        public OrdersMarks(List<Mark> marks)
+        {
+            Marks = marks;
+            Iteration = 0;
+        }
+        public void Next()
+        {
+            Iteration++;
+        }
+        public Mark GetMark()
+        {
+            return Marks[Iteration];
+        }
     }
 }

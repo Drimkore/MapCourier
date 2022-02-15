@@ -7,8 +7,13 @@ namespace MapCourier.Controllers
 {
     public class WorkController : Controller
     {
-        private List<Mark> Marks;
-        private int Iteration;
+        private readonly MapContext _context;
+
+        public WorkController(MapContext context)
+        {
+            _context = context;
+        }
+        private OrdersMarks Marks;
         public IActionResult Index()
         {
             return View();
@@ -16,7 +21,7 @@ namespace MapCourier.Controllers
         [HttpPost]
         public IActionResult Index(string latitude, string longitude) 
         {
-            Marks = FinalResult.GetResultPath(latitude, longitude);
+            Marks = new(FinalResult.GetResultPath(latitude, longitude));
             return View();
             
         }
@@ -28,7 +33,7 @@ namespace MapCourier.Controllers
 
         public IActionResult Pickup()
         {
-            return View();
+            return View(Marks);
         }
         //[HttpPost]
         //public IActionResult Pickup()
@@ -37,7 +42,17 @@ namespace MapCourier.Controllers
         //}
         public IActionResult Deliver()
         {
-            return View();
+
+            var mark = Marks.GetMark();
+            if (mark.Status == "busy")
+            {
+                mark.Status = "finished";
+                var order = _context.Order.FirstOrDefault(o => o.OrderID == mark.ID);
+                order.status = "finished";
+                _context.SaveChangesAsync();
+            }
+            Marks.Next();
+            return View(Marks);
         }
     }
 }
