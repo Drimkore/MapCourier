@@ -1,4 +1,4 @@
-﻿@model OrdersMarks
+﻿@model Delivery
 
 @{
     ViewData["Title"] = "Ваш склад";
@@ -44,7 +44,7 @@ map.on('load', function() {
 
 function showPosition(position) {
     directions.setOrigin([position.coords.longitude, position.coords.latitude]);
-    directions.setDestination([@Model.GetMark().Y, @Model.GetMark().X]);
+    directions.setDestination([@Model.Storage.Longitude, @Model.Storage.Latitude]);
 }
 
 </script>
