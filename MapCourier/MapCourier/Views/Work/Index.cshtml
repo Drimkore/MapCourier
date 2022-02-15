@@ -1,4 +1,4 @@
-﻿@model MapCourier.Models.Order
+﻿@model List<Delivery>
 
 @{
     ViewData["Title"] = "Выбор заказа";
@@ -13,11 +13,13 @@
   <div class="card-header">
     Featured
   </div>
+
   <ul class="list-group list-group-flush">
     <li class="list-group-item">An item</li>
     <li class="list-group-item">A second item</li>
     <li class="list-group-item">A third item</li>
   </ul>
+
   <div>
   <button class="btn btn-primary">
             Проверка
@@ -28,10 +30,26 @@
     
   </div>
   </div>
+
+
+<form method="post" action="~/Work/Index">
+    <input type="text" id = "lat" name="latitude" hidden/><br />
+    <input type="text" id = "lon" name="longitude" hidden/><br />
+    <input type="submit" value="Get orders" />
+</form>
+
+
+
+  <form method="post" action="~/Work/RedirectToPickup">
+    <input type="submit" value="Accept orders" />
+</form>
+
+</body>
+
+
   @section Scripts {
   <script>
-      document.getElementById("checkButton").addEventListener("click", collectData);
-      async function collectData() {
+      
       if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
       }
@@ -39,21 +57,6 @@
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("lon").value = position.coords.longitude;
       }
-      }
+      
   </script>
   }
-  <button type = "button" id = "checkButton"> Get Coords </button>
-
-<form method="post" action="~/Work/Index">
-    <input type="text" id = "lat" name="latitude" /><br />
-    <input type="text" id = "lon" name="longitude" /><br />
-    <input type="submit" value="Check" />
-</form>
-
-
-
-  <form method="post" action="~/Work/RedirectToPickup">
-    <input type="submit" value="Redirect" />
-</form>
-
-</body>
