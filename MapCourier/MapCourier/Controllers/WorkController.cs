@@ -18,6 +18,9 @@ namespace MapCourier.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             if (!_context.Order.Where(o => o.status == "waiting").Any())
             {
                 return Redirect("../Work/Finish");
@@ -32,6 +35,9 @@ namespace MapCourier.Controllers
         [HttpPost]
         public IActionResult Index(string latitude, string longitude) 
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             var marks = FinalResult.GetResultPath(latitude, longitude);
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             int? storage = 0;
@@ -71,11 +77,17 @@ namespace MapCourier.Controllers
         [HttpPost]
         public IActionResult RedirectToPickup()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             return Redirect("../Work/Pickup");
         }
 
         public IActionResult Pickup(string action)
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
 
             Storage storage = new Storage();
             if (action == "redirect")
@@ -96,6 +108,9 @@ namespace MapCourier.Controllers
 
         public IActionResult Deliver()
         {
+            if (!User.Identity.IsAuthenticated){
+                return NotFound();
+            }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
