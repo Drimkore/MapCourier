@@ -59,15 +59,13 @@ namespace MapCourier.Controllers
 
         public IActionResult Pickup(string action)
         {
+
             Storage storage = new Storage();
             if (action == "redirect")
                 return Redirect("../Work/Deliver");
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
-            if (delivery == null)
-            {
-                return Redirect("../Work/Finish");
-            }
+            
             if(delivery.OrderID == null)
             {
                 storage = _context.Storage.FirstOrDefault(s => s.StorageID == delivery.StorageID);
@@ -82,8 +80,13 @@ namespace MapCourier.Controllers
         public IActionResult Deliver()
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
-            if(delivery.OrderID == null)
+            if (delivery == null)
+            {
+                return NotFound();
+            }
+            if (delivery.OrderID == null)
             {
                 return Redirect("../Work/Pickup");
             }
