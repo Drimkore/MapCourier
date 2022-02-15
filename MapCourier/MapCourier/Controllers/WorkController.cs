@@ -17,8 +17,15 @@ namespace MapCourier.Controllers
         public IActionResult Index(string latitude, string longitude) 
         {
             Marks = FinalResult.GetResultPath(latitude, longitude);
+            return View();
+            
+        }
+        [HttpPost]
+        public IActionResult RedirectToPickup()
+        {
             return Redirect("../Work/Pickup");
         }
+
         public IActionResult Pickup()
         {
             return View();
