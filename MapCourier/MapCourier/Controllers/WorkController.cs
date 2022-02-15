@@ -42,7 +42,11 @@ namespace MapCourier.Controllers
                 }
             }
 
-            
+            _context.Delivery.Add(new Delivery() 
+            {
+                UserID = User.FindFirst(ClaimTypes.NameIdentifier).Value,
+                StorageID = marks.Last().ID
+            });
             _context.SaveChanges();
             return View();
             
@@ -53,30 +57,40 @@ namespace MapCourier.Controllers
             return Redirect("../Work/Pickup");
         }
 
-        public IActionResult Pickup()
+        public IActionResult Pickup(string action)
+        {
+            Storage storage = new Storage();
+            if (action == "redirect")
+                return Redirect("../Work/Deliver");
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
+            if (delivery == null)
+            {
+                return NotFound();
+            }
+            if(delivery.OrderID == null)
+            {
+                storage = _context.Storage.FirstOrDefault(s => s.StorageID == delivery.StorageID);
+                _context.Delivery.Remove(delivery);
+                _context.SaveChanges();
+                return View(storage);
+            }
+            storage = _context.Storage.FirstOrDefault(s => s.StorageID == delivery.StorageID);
+            return View(storage);
+        }
+
+        public IActionResult Deliver()
         {
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
-            var storage = _context.Storage.FirstOrDefault(s => s.StorageID == delivery.StorageID);
-            return View(storage);
-        }
-        //[HttpPost]
-        //public IActionResult Pickup()
-        //{
-
-        //}
-        public IActionResult Deliver()
-        {
-            //var mark = Marks.GetMark();
-            //if (mark.Status == "busy")
-            //{
-            //    mark.Status = "finished";
-            //    var order = _context.Order.FirstOrDefault(o => o.OrderID == mark.ID);
-            //    order.status = "finished";
-            //    _context.SaveChangesAsync();
-            //}
-            //Marks.Next();
-            return View();
+            if(delivery.OrderID == null)
+            {
+                return Redirect("../Work/Pickup");
+            }
+            var order = _context.Order.FirstOrDefault(s => s.OrderID == delivery.OrderID);
+            _context.Delivery.Remove(delivery);
+            _context.SaveChanges();
+            return View(order);
         }
     }
 }
