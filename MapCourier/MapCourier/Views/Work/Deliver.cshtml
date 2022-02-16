@@ -14,7 +14,7 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 <style>
 body { margin: 0; padding: 0; }
-#map { margin-top: 150px; position: absolute; top: 0; bottom: 0; width: 50%; }
+#map { mmargin-top: 180px; margin-bottom: 100px; position: absolute; top: 0; bottom: 0; width: 85%; border: 1px solid black }
 </style>
 </head>
 <body>
@@ -22,11 +22,16 @@ body { margin: 0; padding: 0; }
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
 <div style = "display:flex flex-direction:row">
 <div id="map"></div>
-<div style = "display:flex justify-content:">  <form method="post" action="~/Work/Deliver">
-      <input type="text" value="redirect" hidden />
-    <input type="submit" value="Redirect" />
-</form>
-<textarea>@Model.address</textarea>
+<div class="divb" style="flex-direction: row-reverse">  
+    <form method="post" action="~/Work/Deliver">
+        <input type="text" value="redirect" hidden />
+        <input type="submit" value="Redirect" class="floating-button"  />
+    </form>
+<ol class=square>
+    <li>
+        @Model.address
+    </li>
+</ol>
 </div>
 </div>
 
