@@ -64,6 +64,7 @@ body {
         margin: 0 0 10px 2em;
         padding: 4px 8px;
         border: 2px solid black;
+        font-size: 20px;
     }
 
         .square li:before {
