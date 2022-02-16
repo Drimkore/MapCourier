@@ -18,7 +18,8 @@ namespace MapCourier.Controllers
 
         public IActionResult Index()
         {
-            
+            if (!_context.Storage.Any())
+                return Redirect("../Storages");
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (_context.Delivery.Where(d => d.UserID == user).Any())
             {
