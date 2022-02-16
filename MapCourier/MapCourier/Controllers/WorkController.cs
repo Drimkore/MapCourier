@@ -19,16 +19,16 @@ namespace MapCourier.Controllers
         public IActionResult Index()
         {
             
-            if (!_context.Order.Where(o => o.status == "waiting").Any())
-            {
-                return Redirect("../Work/Finish");
-            }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             if (_context.Delivery.Where(d => d.UserID == user).Any())
             {
                 return Redirect("../Work/Pickup");
             }
-                return View();
+            if (!_context.Order.Where(o => o.status == "waiting").Any())
+            {
+                return Redirect("../Work/Finish");
+            }
+            return View();
         }
         [HttpPost]
         public IActionResult Index(string latitude, string longitude) 
