@@ -88,6 +88,23 @@ body {
             transition: .3s linear;
         }
 
+.cell {
+    margin: 0;
+    counter-reset: li;
+    list-style: none;
+    padding: 10px;
+}
+
+    .cell li {
+        position: relative;
+        margin: 0 0 10px 2em;
+        padding: 4px 8px;
+        border: 2px solid black;
+        font-size: 20px;
+    }
+
+
+
 table {
     border: 1px solid black;
 }
