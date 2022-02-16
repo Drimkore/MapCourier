@@ -18,12 +18,15 @@
                 <div>
                     <label asp-for="address" class="control-label"></label>
                 </div>
-                <div class="diva">
+                <div>
                 <input id = "orderInput" asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+                </div>
+                <div class="diva">
                 <button type = "button" id="buttonOrder" class="floating-button">Find the address</button>
                 </div>
             </div>
-            <span asp-validation-for="address" class="text-danger"></span>
+            
             <div class="form-group">
                 <label asp-for="Longitude" class="control-label"></label>
                 <input id = "inputLong" asp-for="Longitude" class="form-control" readonly/>
