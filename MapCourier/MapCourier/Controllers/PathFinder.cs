@@ -130,6 +130,10 @@ namespace MapCourier.Controllers
                 {
                     c += j.PastMarkDist + j.NearStorageDist;
                 }
+                while (keyValuePairs.ContainsKey(c))
+                {
+                    c += 0.1e-16;
+                }
                 keyValuePairs.Add(c, i);
             }
             for (var i = 0; i < count; i++)
