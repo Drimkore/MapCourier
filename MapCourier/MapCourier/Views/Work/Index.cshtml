@@ -19,10 +19,10 @@
             </ol>
         }
         <div class="divb">
-  <form method="post" action="~/Work/Index">
+  <form method="post" action="../Work/Index">
     <input type="text" id = "lat" name="latitude" hidden/>
     <input type="text" id = "lon" name="longitude" hidden/>
-    <input id = "getOrders" class="floating-button" type="submit" value="Get orders" />
+    <input id = "getOrders" class="floating-button" type="submit" value="Get orders" hidden/>
 </form>
   <form method="post" action="~/Work/RedirectToPickup">
     <input id = "startDelivery" class="floating-button" type="submit" value="Accept orders" />
@@ -40,18 +40,17 @@
      }
      else {
          <script>
-     document.getElementById("startDelivery").hidden = true
+     document.getElementById("startDelivery").hidden = true;
      </script>
      }
  <script>
-      
       if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
       }
       function showPosition(position) {
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("lon").value = position.coords.longitude;
+      document.getElementById("getOrders").hidden = false;
       }
-      
  </script>
  }
