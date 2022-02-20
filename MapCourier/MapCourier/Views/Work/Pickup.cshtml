@@ -23,10 +23,10 @@ body { margin: 0; padding: 0; }
 <div style = "display:flex flex-direction:row">
 <div id="map"></div>
 <div class="divb" style="flex-direction: row-reverse">  
-      <form method="post" action="~/Work/Deliver">
-      <input type="text" value="redirect" hidden />
-      <input type="submit" value="К заказам" class="floating-button" style="width: 200px" />
-</form>
+    <form method="post" action="~/Work/Pickup">
+        <input type="text" name="action" value="redirect" hidden />
+        <input type="submit" value="К заказам" class="floating-button" style="width: 200px" />
+    </form>
 <ol class=cell>
     <li>
         @Model.storageAddress
