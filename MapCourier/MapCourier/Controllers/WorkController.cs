@@ -73,12 +73,6 @@ namespace MapCourier.Controllers
                     _context.Delivery.Add(d);
                 }
             }
-
-            _context.Delivery.Add(new Delivery() 
-            {
-                UserID = user,
-                StorageID = marks.Last().ID
-            });
             _context.SaveChanges();
             foreach(var m in marks)
             {
@@ -118,6 +112,9 @@ namespace MapCourier.Controllers
             {
                 _context.Delivery.Remove(delivery);
                 _context.SaveChanges();
+                delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
+                if (delivery == null)
+                    return Redirect("../Work/Finish");
                 return Redirect("../Work/Deliver");
             }
             return View(storage);
@@ -129,16 +126,7 @@ namespace MapCourier.Controllers
                 return NotFound();
             }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
-            if (delivery == null)
-            {
-                return Redirect("../Work/Finish");
-            }
-            if (delivery.OrderID == null)
-            {
-                return Redirect("../Work/Pickup");
-            }
+            var delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);   
             var order = _context.Order.FirstOrDefault(s => s.OrderID == delivery.OrderID);
             if (action == "redirect")
             {
@@ -146,6 +134,12 @@ namespace MapCourier.Controllers
                 _context.Order.Update(order);
                 _context.Delivery.Remove(delivery);
                 _context.SaveChanges();
+                delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
+                order = _context.Order.FirstOrDefault(s => s.OrderID == delivery.OrderID);
+            }
+            if (delivery.OrderID == null)
+            {
+                return Redirect("../Work/Pickup");
             }
             return View(order);
         }
