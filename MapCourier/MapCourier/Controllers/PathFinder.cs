@@ -145,6 +145,7 @@ namespace MapCourier.Controllers
     }
     public class FinalResult
     {
+   
         public static List<Mark> GetResultPath(string x, string y)
         {
             PathFinder pathFinder = new PathFinder();
@@ -154,8 +155,8 @@ namespace MapCourier.Controllers
             using (var db = new MapContext())
             {
                 int minDist = int.MaxValue;
-                if (!db.Storage.Any())
-                    new NullReferenceException();
+                //if (!db.Storage.Any())
+                //    new NullReferenceException();
                 foreach (var storage in db.Storage)
                 {
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);

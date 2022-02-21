@@ -114,7 +114,7 @@ namespace MapCourier.Controllers
                 _context.SaveChanges();
                 delivery = _context.Delivery.FirstOrDefault(d => d.UserID == user);
                 if (delivery == null)
-                    return Redirect("../Work/Finish");
+                    return Redirect("../Work/Index");
                 return Redirect("../Work/Deliver");
             }
             return View(storage);
