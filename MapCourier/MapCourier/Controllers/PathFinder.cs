@@ -21,17 +21,18 @@ namespace MapCourier.Controllers
                 Result.Add(new Mark(mark));
                 return;
             }
+
             mark.NearMarkDist = double.MaxValue;
-            foreach (var i in ClientMarks)
+            foreach (var c in ClientMarks)
             {
-                Mark ClientMark = new(i);
+                Mark ClientMark = new(c);
                 if (mark.ID == ClientMark.ID)
                     continue;
                 double distance = DistanceFinder.GetMapsDistance(mark, ClientMark);
                 bool flag = false;
-                foreach (var j in mark.PastMark)
+                foreach (var m in mark.PastMark)
                 {
-                    if (j.ID == ClientMark.ID)
+                    if (m.ID == ClientMark.ID)
                         flag = true;
                 }
                 if (flag)
@@ -40,12 +41,12 @@ namespace MapCourier.Controllers
                 {
                     if (mark.NearMarkDist - distance > Spread)
                     {
-                        for (var j = 0; j < mark.NearMarks.Count; j++)
+                        for (var i = 0; i < mark.NearMarks.Count; i++)
                         {
-                            if (mark.NearMarks[j].PastMarkDist > distance + Spread)
+                            if (mark.NearMarks[i].PastMarkDist > distance + Spread)
                             {
-                                mark.NearMarks.Remove(mark.NearMarks[j]);
-                                j--;
+                                mark.NearMarks.Remove(mark.NearMarks[i]);
+                                i--;
                             }
                         }
                     }
@@ -56,16 +57,15 @@ namespace MapCourier.Controllers
                     mark.NearMarkDist = distance;
                 }
             }
-            for (var i = 0; i < mark.NearMarks.Count; i++)
+            foreach (var m in mark.NearMarks)
             {
-                FindPaths(mark.NearMarks[i]);
+                FindPaths(m);
             }
             if (mark.NearMarks.Count == 0 && mark.PastMark.Count > 0)
             {
                 Result.Add(new(mark));
             }
         }
-        MapContext mapContext = new MapContext();
         public void GetData()
         {
             ClientMarks = new List<Mark>();
@@ -97,18 +97,18 @@ namespace MapCourier.Controllers
             List<List<Mark>> result = new List<List<Mark>>();
             for (var i = 0; i < Result.Count; i++)
             {
-                var m = Result[i];
-                List<Mark> resultMarks = new List<Mark>(m.PastMark);
-                resultMarks.Add(m);
-                m.NearStorageDist = double.MaxValue;
+                var mark = Result[i];
+                List<Mark> resultMarks = new List<Mark>(mark.PastMark);
+                resultMarks.Add(mark);
+                mark.NearStorageDist = double.MaxValue;
                 Mark nearStorage = null;
                 foreach (var s in StorageMarks)
                 {
-                    var distance = DistanceFinder.GetMapsDistance(m, s);
-                    if (distance <= m.NearStorageDist)
+                    var distance = DistanceFinder.GetMapsDistance(mark, s);
+                    if (distance <= mark.NearStorageDist)
                     {
                         nearStorage = s;
-                        m.NearStorageDist = distance;
+                        mark.NearStorageDist = distance;
                     }
                 }
                 if (nearStorage != null)
@@ -125,16 +125,16 @@ namespace MapCourier.Controllers
             SortedDictionary<double, List<Mark>> keyValuePairs = new SortedDictionary<double, List<Mark>>();
             foreach (var i in marks)
             {
-                double c = 0;
+                double distance = 0;
                 foreach (var j in i)
                 {
-                    c += j.PastMarkDist + j.NearStorageDist;
+                    distance += j.PastMarkDist + j.NearStorageDist;
                 }
-                while (keyValuePairs.ContainsKey(c))
+                while (keyValuePairs.ContainsKey(distance))
                 {
-                    c += 0.1e-15;
+                    distance += 0.1e-15;
                 }
-                keyValuePairs.Add(c, i);
+                keyValuePairs.Add(distance, i);
             }
             for (var i = 0; i < count; i++)
             {

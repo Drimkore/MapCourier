@@ -50,13 +50,8 @@ namespace MapCourier.Controllers
         }
         public static double GetMapsDistance(Mark mark1, Mark mark2)
         {
-            var mark1X = Convert.ToDouble(mark1.X.Replace('.', ','));
-            var mark1Y = Convert.ToDouble(mark1.Y.Replace('.', ','));
-            var mark2X = Convert.ToDouble(mark2.X.Replace('.', ','));
-            var mark2Y = Convert.ToDouble(mark2.Y.Replace('.', ','));
-            var lengthX = mark1X - mark2X;
-            var lengthY = mark1Y - mark2Y;
-            return Math.Sqrt(lengthX * lengthX + lengthY * lengthY);
+            return GetMapsDistance(mark1.X, mark1.Y, mark2.X, mark2.Y);
+
         }
         public static double GetMapsDistance(string x1, string y1, string x2, string y2)
         {
