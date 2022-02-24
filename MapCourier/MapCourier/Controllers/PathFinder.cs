@@ -25,9 +25,9 @@ namespace MapCourier.Controllers
             foreach (var i in ClientMarks)
             {
                 Mark ClientMark = new(i);
-                double distance = DistanceFinder.GetMapsDistance(mark, ClientMark);
-                if (distance == 0)
+                if (mark.ID == ClientMark.ID)
                     continue;
+                double distance = DistanceFinder.GetMapsDistance(mark, ClientMark);
                 bool flag = false;
                 foreach (var j in mark.PastMark)
                 {
@@ -132,7 +132,7 @@ namespace MapCourier.Controllers
                 }
                 while (keyValuePairs.ContainsKey(c))
                 {
-                    c += 0.1e-16;
+                    c += 0.1e-15;
                 }
                 keyValuePairs.Add(c, i);
             }
