@@ -20,32 +20,40 @@ public class HomeController : Controller
     }
     public IActionResult Index(string action)
     {
-        var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-        var delivery = (_context.Delivery.Where(d => d.UserID == user));
-        var acceptance = delivery.Where(d => d.Order.status == "acceptance");
-        if (acceptance != null && acceptance.Any())
+        if (User.Identity.IsAuthenticated)
         {
-
-            foreach (var d in delivery)
+            var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var delivery = (_context.Delivery.Where(d => d.UserID == user));
+            var acceptance = delivery.Where(d => d.Order.status == "acceptance");
+            if (acceptance != null && acceptance.Any())
             {
-                _context.Delivery.Remove(d);
-            }
-            foreach (var a in acceptance)
-            {
-                var order = _context.Order.FirstOrDefault(o => o.OrderID == a.OrderID);
-                order.status = "waiting";
-                _context.Order.Update(order);
-            }
-            _context.SaveChangesAsync();
+
+                foreach (var d in delivery)
+                {
+                    _context.Delivery.Remove(d);
+                }
+                foreach (var a in acceptance)
+                {
+                    var order = _context.Order.FirstOrDefault(o => o.OrderID == a.OrderID);
+                    order.status = "waiting";
+                    _context.Order.Update(order);
+                }
+                _context.SaveChangesAsync();
 
 
+            }
+            if (action == "work")
+                return Redirect("../Work/Index");
+            //if (User.Identity.IsAuthenticated) { return View(); }  РУКАМИ НЕ ТРОГАТЬ
+            //else { return NotFound();
+            //}
+            return View();
         }
-        if(action == "work")
-            return Redirect("../Work/Index");
-        //if (User.Identity.IsAuthenticated) { return View(); }  РУКАМИ НЕ ТРОГАТЬ
-        //else { return NotFound();
-        //}
-        return View();
+        else
+        {
+            return View();
+        }
+        
     }
 
     public IActionResult Privacy()
