@@ -9,29 +9,32 @@
 <head>
 <meta charset="utf-8">
 <title>Display navigation directions</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
 <style>
 body { margin: 0; padding: 0; }
-#map { margin-top: 180px; margin-bottom: 100px; position: absolute; top: 0; bottom: 0; width: 85%; border: 1px solid black }
+#map { margin-top: 250px; margin-bottom: 100px; position: absolute; top: 0; bottom: 0; width: 100%; max-width: 1000px; border: 1px solid black }
 </style>
 </head>
 <body>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
-<div style = "display:flex flex-direction:row">
-<div id="map"></div>
-<div class="divb" style="flex-direction: row-reverse">  
+<div style = "display:flex; justify-content:center">
+
+<div class="divc">  
+  
     <form method="post" action="~/Work/Pickup">
         <input type="text" name="action" value="redirect" hidden />
         <input type="submit" value="К заказам" class="floating-button" style="width: 200px" />
     </form>
+    
 <ol class=cell>
     <li>
         @Model.storageAddress
     </li>
 </ol>
+<div id="map" ></div>
 </div>
 </div>
 

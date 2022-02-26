@@ -29,6 +29,14 @@ body {
     justify-content: center
 }
 
+.divc {
+    max-width:1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse
+}
+
 .floating-button {
     text-decoration: none;
     display: inline-block;
@@ -130,4 +138,15 @@ td {
 
 a {
     padding-top: 10px;
+}
+
+
+
+@media (max-width: 786px){
+    .divc{
+        flex-direction:column;
+    }
+    .cell li {
+        margin: 0;
+    }
 }
