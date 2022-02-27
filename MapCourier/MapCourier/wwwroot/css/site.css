@@ -140,7 +140,16 @@ a {
     padding-top: 10px;
 }
 
-
+#map {
+    margin-top: 250px;
+    margin-bottom: 100px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 1000px;
+    border: 1px solid black
+}
 
 @media (max-width: 786px){
     .divc{
@@ -148,5 +157,12 @@ a {
     }
     .cell li {
         margin: 0;
+        font-size: 12pt;
     }
+}
+@media (max-width: 435px) {
+    #map {
+        margin-top: 350px;
+    }
+}
 }
