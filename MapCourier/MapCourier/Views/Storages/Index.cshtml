@@ -5,7 +5,7 @@
 }
 <div class="diva">
     <h1>Index</h1>
-    <a asp-action="Create" class="floating-button">Create New</a>
+    <a asp-action="Create" class="floating-button">Создать новый склад</a>
 </div>
 
 
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Latitude)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.StorageID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.StorageID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.StorageID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.StorageID">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.StorageID">Сведения</a> |
+                <a asp-action="Delete" asp-route-id="@item.StorageID">Удалить</a>
             </td>
         </tr>
 }
