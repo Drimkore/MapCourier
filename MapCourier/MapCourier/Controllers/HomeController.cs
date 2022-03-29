@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using MapCourier.Models;
-using MapCourier.Controllers;
 using MapCourier.Data;
 using System.Security.Claims;
 

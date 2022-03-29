@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MapCourier.Data;
 using MapCourier.Models;
-using MapCourier.Controllers;
-using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace MapCourier.Controllers

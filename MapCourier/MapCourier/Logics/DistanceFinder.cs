@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MapCourier.Models;
+﻿using MapCourier.Models;
 using System.Net;
 
 namespace MapCourier.Controllers
