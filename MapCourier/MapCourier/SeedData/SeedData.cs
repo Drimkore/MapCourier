@@ -1,9 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using MapCourier.Data;
-using System;
-using System.Linq;
-using MapCourier.Models;
 
 namespace MapCourier.SeedData
 
@@ -16,54 +13,24 @@ namespace MapCourier.SeedData
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MapContext>>()))
             {
-                if (context.Order.Any() && context.Storage.Any())
+                if (context.Roles.Any())
                 {
                     return;
                 }
-
-                context.Order.AddRange(
-                    new Order
-                    {   address = "Test",
-                        Longitude = "1",
-                        Latitude = "1",
-                        status = "yes"
-                    },
-                    new Order
-                    {   address = "Test",
-                        Longitude = "1",
-                        Latitude = "1",
-                        status = "no"
-                    },
-                    new Order
-                    {   address = "Test",
-                        Longitude = "1",
-                        Latitude = "1",
-                        status = "yes"
-                    });
-                context.Storage.AddRange(
-                    new Storage
+                context.Roles.AddRange(
+                    new IdentityRole
                     {
-                        storageAddress = "test",
-                        storageName = "testName",
-                        Latitude = "1",
-                        Longitude = "1"
+                        Name = "Admin"
                     },
-                    new Storage
+                    new IdentityRole
                     {
-                        storageAddress = "test",
-                        storageName = "testName",
-                        Latitude = "1",
-                        Longitude = "1"
+                        Name = "Operator"
                     },
-                    new Storage
+                    new IdentityRole
                     {
-                        storageAddress = "test",
-                        storageName = "testName",
-                        Latitude = "1",
-                        Longitude = "1"
+                        Name = "Courier"
                     }
-                    );               
-                
+                );
                 context.SaveChanges();
             }
         }

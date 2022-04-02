@@ -14,16 +14,16 @@ builder.Services.AddDbContext<MapContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<MapContext>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<MapContext>();    
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    // Звполнение таблиц стартовыми тестовыми данными, надо менять если убираем коммент.
-    //SeedData.Initialize(services);
+    var services = scope.ServiceProvider;    
+    SeedData.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.

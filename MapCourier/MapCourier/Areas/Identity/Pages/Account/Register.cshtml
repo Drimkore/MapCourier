@@ -2,6 +2,7 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    var roles = (List<IdentityRole>)ViewData["roles"];
 }
 
 
@@ -29,6 +30,12 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.ConfirmPassword"></label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-floating">                
+                <select asp-for="Input.UserRole" class="form-control" asp-items='new SelectList(roles,"Id","Name")'>
+                <label asp-for="Input.UserRole"></label>
+                </select>
+                <span asp-validation-for="Input.UserRole" class="text-danger"></span>
             </div>
             <div class="diva">
                 <button id="registerSubmit" type="submit" class="floating-button" style="width: 80%">Зарегистрироваться</button>
