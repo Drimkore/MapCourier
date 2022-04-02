@@ -22,8 +22,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
-    SeedData.Initialize(services);
+    // Звполнение таблиц стартовыми тестовыми данными, надо менять если убираем коммент.
+    //SeedData.Initialize(services);
 }
 
 // Configure the HTTP request pipeline.

@@ -57,7 +57,9 @@ namespace MapCourier.Migrations
                     address = table.Column<string>(type: "TEXT", nullable: false),
                     Longitude = table.Column<string>(type: "TEXT", nullable: false),
                     Latitude = table.Column<string>(type: "TEXT", nullable: false),
-                    status = table.Column<string>(type: "TEXT", nullable: false)
+                    status = table.Column<string>(type: "TEXT", nullable: false),
+                    TimeFrameBeginning = table.Column<string>(type: "TEXT", nullable: false),
+                    TimeFrameEnding = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
