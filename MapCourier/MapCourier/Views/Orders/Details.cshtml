@@ -1,0 +1,54 @@
+@model MapCourier.Models.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div class="diva">
+       <h1>Детали заказа</h1>
+</div>
+
+<div class="diva">
+    <table>
+        <tr>
+            <th >
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.address)
+            </td>
+            
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Longitude)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Latitude)
+            </td>
+        </tr>
+        <tr>
+           <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.status)
+            </td>
+        </tr>
+     
+    </table>
+
+
+
+<div class="divb" >
+    <a asp-action="Edit" asp-route-id="@Model?.OrderID" class="floating-button">Изменить</a>
+    <a asp-action="Index" class="floating-button">Назад</a>
+</div>
+</div>

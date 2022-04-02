@@ -1,0 +1,54 @@
+@model IEnumerable<MapCourier.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="diva">
+    <h1>Index</h1>
+    <a asp-action="Create" class="floating-button">Создать</a>
+</div>
+
+
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Longitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Latitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrderID">Изменить</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderID">Сведения</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderID">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

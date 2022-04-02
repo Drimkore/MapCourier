@@ -1,0 +1,61 @@
+@model MapCourier.Models.Storage
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<div class="diva">
+    <h1>Сведения о складе</h1>
+    <h3>Вы уверены, что хотите удалить это?</h3>
+
+</div>
+
+
+
+<div class="diva">
+    <hr />
+        <table>
+        <tr>
+            <th >
+                @Html.DisplayNameFor(model => model.storageName)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.storageName)
+            </td>
+            
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.storageAddress)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.storageAddress)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Longitude)
+            </td>
+        </tr>
+        <tr>
+           <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Latitude)
+            </td>
+        </tr>
+     
+    </table>
+
+    <div class="divb">
+
+        <form asp-action="Delete">
+        <input type="hidden" asp-for="StorageID" />
+        <input type="submit" value="Удалить" class="floating-button" /> 
+    </form>
+    <a asp-action="Index" class="floating-button">Назад</a>
+    </div>
+</div>

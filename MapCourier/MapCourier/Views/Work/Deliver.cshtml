@@ -1,0 +1,72 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Доставка";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display navigation directions</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+</head>
+<body>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+<div style = "display:flex; justify-content:center">
+<div class="divc">  
+    <form method="post" action="~/Work/Deliver">
+        <input type="text" name="action" value="redirect" hidden />
+        <input type="submit" value="Следющий заказ" class="floating-button" style="width: 200px" />
+    </form>
+<ol class=cell>
+    <li>
+        @Model.address
+    </li>
+</ol>
+<div id="map"></div>
+</div>
+</div>
+
+
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/mapbox/streets-v11',
+center: [60.619931, 56.830317],
+zoom: 9,
+maxZoom: 14,
+interactive: 'false'
+});
+
+
+var directions = new MapboxDirections({
+    accessToken: mapboxgl.accessToken,
+    unit: 'metric',
+    profice: 'mapbox/driving',
+    language: 'ru',
+    interactive: 'false'
+});
+map.addControl(directions,'top-left');
+
+map.on('load', function() {
+    if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+    }
+})
+
+function showPosition(position) {
+    directions.setOrigin([position.coords.longitude, position.coords.latitude]);
+    directions.setDestination([@Model.Latitude, @Model.Longitude]);
+    
+}
+
+</script>
+
+</body>
+</html>

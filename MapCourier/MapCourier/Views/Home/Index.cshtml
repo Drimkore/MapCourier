@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="diva">
+    <h1 class="display-4">Добро пожаловать</h1>
+    <!--<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>-->
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form method="post" action="~/Home/Index">
+    <input type="text" name="action" value = "work" hidden/><br />
+    <input type="submit" value="Начать работу" class="floating-button" style="width: 200px"/>
+</form>
+     <form method="get" action="../Orders/">
+    <input type="submit" value="Работа с заказами" class="floating-button" style="width: 200px"/>
+</form>
+    <form method="get" action="../Storages/">
+    <input type="submit" value="Работа со складами" class="floating-button" style="width: 200px"/>
+</form>
+}
+</div>

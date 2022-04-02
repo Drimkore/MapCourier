@@ -1,0 +1,62 @@
+@model MapCourier.Models.Order
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<div class="diva">
+    <div>
+        <h1>Удалить заказ</h1>
+    </div>
+    <div>
+        <h3>Вы уверены, что хотите удалить это?</h3>
+    </div>
+</div>
+
+
+<div class="diva">
+    <hr />
+        <table>
+        <tr>
+            <th >
+                @Html.DisplayNameFor(model => model.address)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.address)
+            </td>
+            
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Longitude)
+            </td>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.Latitude)
+            </td>
+        </tr>
+        <tr>
+           <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <td>
+                @Html.DisplayFor(model => model.status)
+            </td>
+        </tr>
+     
+    </table>
+    <div class="divb">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="OrderID" />
+        <input type="submit" value="Удалить" class="floating-button" />
+        
+    </form>
+    <a asp-action="Index" class="floating-button">Назад</a>
+    </div>
+</div>
