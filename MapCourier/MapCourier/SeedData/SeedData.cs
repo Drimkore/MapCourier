@@ -20,15 +20,18 @@ namespace MapCourier.SeedData
                 context.Roles.AddRange(
                     new IdentityRole
                     {
-                        Name = "Admin"
+                        Name = "Admin",
+                        NormalizedName = "ADMIN"
                     },
                     new IdentityRole
                     {
-                        Name = "Operator"
+                        Name = "Operator",
+                        NormalizedName = "OPERATOR"
                     },
                     new IdentityRole
                     {
-                        Name = "Courier"
+                        Name = "Courier",
+                        NormalizedName = "COURIER"
                     }
                 );
                 context.SaveChanges();
