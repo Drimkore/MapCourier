@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;  
 using Microsoft.AspNetCore.Mvc;  
        
 namespace MapCourier.Controllers  
 {  
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller  
     {  
         RoleManager<IdentityRole> roleManager;

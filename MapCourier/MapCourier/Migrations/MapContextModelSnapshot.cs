@@ -79,12 +79,10 @@ namespace MapCourier.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TimeFrameBeginning")
-                        .IsRequired()
+                    b.Property<DateTime>("TimeFrameBeginning")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TimeFrameEnding")
-                        .IsRequired()
+                    b.Property<DateTime>("TimeFrameEnding")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("address")

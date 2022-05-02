@@ -19,11 +19,21 @@
                     <label asp-for="address" class="control-label"></label>
                 </div>
                 <div>
-                <input id = "orderInput" asp-for="address" class="form-control" />
-                <span asp-validation-for="address" class="text-danger"></span>
+                    <input id = "orderInput" asp-for="address" class="form-control" />
+                    <span asp-validation-for="address" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="TimeFrameBeginning" class="control-label"></label>
+                    <input asp-for="TimeFrameBeginning" class="form-control" />
+                    <span asp-validation-for="TimeFrameBeginning" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="TimeFrameEnding" class="control-label"></label>
+                    <input asp-for="TimeFrameEnding" class="form-control" />
+                    <span asp-validation-for="TimeFrameEnding" class="text-danger"></span>
                 </div>
                 <div class="diva">
-                <button type = "button" id="buttonOrder" class="floating-button">Найти адрес</button>
+                    <button type = "button" id="buttonOrder" class="floating-button">Найти адрес</button>
                 </div>
             </div>
             

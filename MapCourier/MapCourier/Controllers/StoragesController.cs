@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MapCourier.Data;
 using MapCourier.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MapCourier.Controllers
 {
+    [Authorize(Roles = "Admin,Operator")]
     public class StoragesController : Controller
     {
         private readonly MapContext _context;
