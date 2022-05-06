@@ -3,21 +3,40 @@
 @{
     ViewData["Title"] = "Выбор заказа";
 }
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display navigation directions</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+</head>
 <body>
-
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
 <div class="diva">
   <div class="card-header">
     Выбор заказов
   </div>
   @if (Model!=null && Model.Any())
         {
+            <script>
+                var check = 1;
+                var checkLat = @Model[0].Latitude;
+                var checkLon = @Model[0].Longitude;
+                document.getElementById("map").hidden = false;     
+
+            </script>
             <ol class="square">
                 @for (int i = 0; i < Model.Count(); i++)
                 {
                     <li>@Model[i].address</li>}
+
+
             </ol>
         }
+     
         <div class="divb">
   <form method="post" action="../Work/Index">
     <input type="text" id = "lat" name="latitude" hidden/>
@@ -30,7 +49,43 @@
   </div>
   </div>
 </body>
+<div id="map"></div>
+<script>
 
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/navigation-night-v1',
+            center: [60.619931, 56.830317],
+            zoom: 9,
+            maxZoom: 14,
+            });
+            var directions = new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+                unit: 'metric',
+                profile: 'mapbox/driving',
+                language: 'ru-RU',
+                controls: {
+                    profileSwitcher: false,
+                    inputs: false,
+                    instructions: true,
+                    },
+                interactive: false,
+            });
+            
+map.addControl(directions,'top-left');
+
+map.on('wheel', function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPositionMap);
+    }
+})
+
+function showPositionMap(position) {
+        directions.setOrigin([position.coords.longitude, position.coords.latitude]);
+        directions.setDestination([checkLat, checkLon]);
+    }
+</script>
 
  @section Scripts {
      @if (Model!=null && Model.Any()){
@@ -40,17 +95,28 @@
      }
      else {
          <script>
+     document.getElementById("map").hidden = true;
      document.getElementById("startDelivery").hidden = true;
      </script>
      }
  <script>
       if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+      }
+      else {
+          alert("Hello");
       }
       function showPosition(position) {
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("lon").value = position.coords.longitude;
       document.getElementById("getOrders").hidden = false;
       }
+      function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("Разрешите доступ к геолокации");
+            }
+      }
  </script>
  }
+ </html>

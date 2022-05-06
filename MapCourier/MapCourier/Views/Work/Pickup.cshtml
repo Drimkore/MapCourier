@@ -38,7 +38,7 @@
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
+style: 'mapbox://styles/mapbox/navigation-night-v1',
 center: [60.619931, 56.830317],
 zoom: 9,
 maxZoom: 14,
@@ -50,7 +50,7 @@ var directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
     unit: 'metric',
     profice: 'mapbox/driving',
-    language: 'ru',
+    language: 'ru-RU',
     interactive: 'false'
 });
 map.addControl(directions,'top-left');

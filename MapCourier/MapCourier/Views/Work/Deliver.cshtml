@@ -31,26 +31,26 @@
 </div>
 </div>
 
-
-
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
+style: 'mapbox://styles/mapbox/navigation-night-v1',
 center: [60.619931, 56.830317],
 zoom: 9,
 maxZoom: 14,
-interactive: 'false'
 });
-
 
 var directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
     unit: 'metric',
-    profice: 'mapbox/driving',
-    language: 'ru',
-    interactive: 'false'
+    profile: 'mapbox/driving',
+    language: 'ru-RU',
+    controls: {
+          profileSwitcher: true,
+          inputs: false,
+          instructions: false,
+        },
 });
 map.addControl(directions,'top-left');
 
@@ -62,11 +62,11 @@ map.on('load', function() {
 
 function showPosition(position) {
     directions.setOrigin([position.coords.longitude, position.coords.latitude]);
+    directions.addWaypoint(1, ['60.629765', '56.837519']);
+    directions.addWaypoint(2, ['60.631277', '56.844124']);
     directions.setDestination([@Model.Latitude, @Model.Longitude]);
-    
 }
 
 </script>
-
 </body>
 </html>
