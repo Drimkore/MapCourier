@@ -1,0 +1,56 @@
+@model IEnumerable<MapCourier.Models.Delivery>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th style="border-right: 0"></th>
+            <th>
+                @Html.DisplayNameFor(model => model.StorageID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+@foreach (var item in Model) {
+        <tr>
+            <td style="border-right: 0">
+                <div class="dropdown_1">
+                    <input type="checkbox" id="@item.OrderID" hidden />
+                    <label class="block" for="@item.OrderID"></label>
+                    <div class="dropdown-content">
+                     
+                    <a asp-action="Edit" asp-route-id="@item.OrderID" class="floating-button">Изменить</a>
+                    <a asp-action="Details" asp-route-id="@item.OrderID" class="floating-button">Сведения</a>
+                    <a asp-action="Delete" asp-route-id="@item.OrderID" class="floating-button">Удалить</a>
+                    <div style="display: flex; justify-content:space-between;">
+                        <label class="triangle"></label>
+                        <label class="triangle" style="border-width: 0 0 20px 20px; border-color: transparent transparent #000000 transparent;"></label>
+                    </div>
+                        
+                    </div>
+                    </div>
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.StorageID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
