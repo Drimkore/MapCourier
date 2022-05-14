@@ -62,8 +62,6 @@ map.on('load', function() {
 
 function showPosition(position) {
     directions.setOrigin([position.coords.longitude, position.coords.latitude]);
-    directions.addWaypoint(1, ['60.629765', '56.837519']);
-    directions.addWaypoint(2, ['60.631277', '56.844124']);
     directions.setDestination([@Model.Latitude, @Model.Longitude]);
 }
 

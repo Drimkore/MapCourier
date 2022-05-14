@@ -19,12 +19,35 @@
   <div class="card-header">
     Выбор заказов
   </div>
+                  <input id = "inputcheck" class="form-control" readonly/>
+                  <input id = "inputcheck2" class="form-control" readonly/>
+
+  
   @if (Model!=null && Model.Any())
         {
             <script>
-                var check = 1;
-                var checkLat = @Model[0].Latitude;
-                var checkLon = @Model[0].Longitude;
+                var check = 0;
+                if (@Model.Count == 1)
+                {
+                    check = 1;
+                }
+                else if (@Model.Count == 2)
+                {
+                    check = 2;
+                }
+                else if (@Model.Count == 3)
+                {
+                    check = 3;
+                    var Lat1 = @Model[0].Latitude;
+                    var Lon1 = @Model[0].Longitude;
+                    var Lat2 = @Model[1].Latitude;
+                    var Lon2 = @Model[1].Longitude;
+                    var Lat3 = @Model[2].Latitude;
+                    var Lon3 = @Model[2].Longitude;
+                }
+
+                
+                
                 document.getElementById("map").hidden = false;     
 
             </script>
@@ -75,15 +98,39 @@
             
 map.addControl(directions,'top-left');
 
-map.on('wheel', function() {
+map.on('contextmenu', function() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPositionMap);
     }
 })
 
+
+
 function showPositionMap(position) {
+        if (check == 3)
+        {
         directions.setOrigin([position.coords.longitude, position.coords.latitude]);
-        directions.setDestination([checkLat, checkLon]);
+        directions.addWaypoint(1, [Lat1, Lon1]);
+        directions.addWaypoint(2, [Lat2, Lon2]);
+        directions.setDestination([Lat3, Lon3]);
+        var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat1+','+Lon1+';'+Lat2+','+Lon2+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+            request.onload = function () {
+                data = request.response;
+                var data_time = JSON.parse(JSON.stringify(data));
+                document.getElementById("inputcheck").value = data.routes[0].duration;
+                document.getElementById("inputcheck2").value = data.routes[0].distance;
+            }
+        new mapboxgl.Marker()
+            .setLngLat([Lat1, Lon1])
+            .addTo(map);
+        new mapboxgl.Marker()
+            .setLngLat([Lat2, Lon2])
+            .addTo(map);
+        }
     }
 </script>
 
