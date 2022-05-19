@@ -57,7 +57,7 @@ body {
     .floating-button:hover {
         background: black;
         color: white;
-        border: 0px;
+        /*border: 0px;*/
     }
 
 .square {
@@ -112,11 +112,6 @@ body {
     }
 
 
-
-table {
-    border: 1px solid black;
-}
-
 th {
     border-right: 1px solid black;
     padding-right: 20px;
@@ -127,13 +122,13 @@ th {
 }
 
 tr {
-    border-bottom:  1px solid black;
+    border-bottom: 2px solid #9b9b9b;
     padding-top: 10px;
 }
 
 td {
     text-align: center;
-    border-right: 1px solid black;
+    /*border-right: 1px solid black;*/
 }
 
 a {
@@ -173,6 +168,9 @@ a {
     border-width: 50px 50px 0 0;
     border-color: #000000 transparent transparent transparent;
 }
+    .block:hover {
+        border-color: #2F4F4F transparent transparent transparent;
+    }
 
 .triangle {
     width: 0;
@@ -210,3 +208,105 @@ input:checked ~ .dropdown-content {
     border-width: 30px 20px 0 20px;
     border-color: #000000 transparent transparent transparent;
 }
+
+.box-menu {
+    background: black;
+    color: white;
+}
+
+.input_form {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid #9b9b9b;
+    outline: 0;
+    font-size: 1.3rem;
+    color: black;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+.input_form::placeholder {
+    color: transparent;
+}
+
+    .input_form:placeholder-shown ~ .label_form {
+        font-size: 1.3rem;
+        cursor: text;
+        top: 20px;
+    }
+
+    .input_form:focus {
+        padding-bottom: 6px;
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right, #151719, #151719);
+        border-image-slice: 1;
+    }
+
+        .input_form:focus ~ .label_form {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #151719;
+            font-weight: 700;
+        }
+.label_form {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+
+.input_form:required, .label_form:invalid {
+    box-shadow:none;
+}
+
+
+.form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.heading-table th {
+    background-color: #000000;
+    color: white;
+}
+
+table {
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.30);
+    border: none;
+    width:90%;
+    margin: 0 auto;
+}
+
+td {
+    padding: 15px;
+    border: none;
+}
+
+.tabled {
+    border: 3px solid black;
+}
+
+tr:hover {
+    border-color: black;
+}
+
+.tabled tr > th {
+    background: black;
+    color: white;
+    border-bottom: 2px solid white;
+}
+
+
+
