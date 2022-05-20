@@ -32,6 +32,9 @@ namespace MapCourier.Migrations
                     b.Property<string>("UserID")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("DeliveryID");
 
                     b.HasIndex("OrderID");

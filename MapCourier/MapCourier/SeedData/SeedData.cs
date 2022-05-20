@@ -13,7 +13,7 @@ namespace MapCourier.SeedData
                 serviceProvider.GetRequiredService<
                     DbContextOptions<MapContext>>()))
             {
-                if (context.Roles.Any())
+                if (context.Roles.Any() && context.Users.Any())
                 {
                     return;
                 }
@@ -33,9 +33,30 @@ namespace MapCourier.SeedData
                         Name = "Courier",
                         NormalizedName = "COURIER"
                     }
-                );
+                );  
+                /*PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+                
+                context.Users.AddRange(
+                    new IdentityUser(){
+                        UserName = "admin",
+                        Email = "admin@mail.ru",
+                        EmailConfirmed = true,
+                        PasswordHash = userManager.CreateAsync()
+                    }
+                )       */      
                 context.SaveChanges();
             }
         }
+    
+       /* private static void Psswd(UserManager<IdentityUser> userManager){
+            IdentityUser identityUser = new IdentityUser(){
+                UserName = "admin",
+                Email = "admin@mail.ru",
+                EmailConfirmed = true
+            };
+            PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+            passwordHasher.HashPassword(identityUser, "Admin1!");
+            userManager.CreateAsync(identityUser, "Admin1!").Result;            
+        }*/
     }
 }

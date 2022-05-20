@@ -196,7 +196,8 @@ namespace MapCourier.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StorageID = table.Column<int>(type: "INTEGER", nullable: true),
                     OrderID = table.Column<int>(type: "INTEGER", nullable: true),
-                    UserID = table.Column<string>(type: "TEXT", nullable: true)
+                    UserID = table.Column<string>(type: "TEXT", nullable: true),
+                    UserName = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
