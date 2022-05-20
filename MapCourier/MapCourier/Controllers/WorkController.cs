@@ -41,6 +41,7 @@ namespace MapCourier.Controllers
                 return NotFound();
             }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
             var delivers = _context.Delivery.Where(d => d.UserID == user);
             var orders = new List<Order>();
             if (delivers.Any())
@@ -59,6 +60,7 @@ namespace MapCourier.Controllers
             {
                 Delivery d = new();
                 d.UserID = user;
+                d.UserName = username;
                 if (m.Status == "storage")
                 {
                     d.StorageID = m.ID;
