@@ -30,7 +30,7 @@ body {
 }
 
 .divc {
-    max-width:1000px;
+   /* max-width:1000px;*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,14 +141,24 @@ a {
 }
 
 #map {
-    margin-top: 250px;
+    position: relative;
+    height: inherit;
+    width: inherit;
+/*    margin-top: 250px;
     margin-bottom: 100px;
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
     max-width: 1000px;
-    border: 1px solid black
+    border: 1px solid black*/
+}
+
+#map-container {
+    position: relative;
+    height: 500px;
+    width: 1300px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 50%)
 }
 
 @media (max-width: 786px){

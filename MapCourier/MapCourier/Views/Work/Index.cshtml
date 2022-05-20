@@ -15,13 +15,27 @@
 <body>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
-<div class="diva">
-  <div class="card-header">
-    Выбор заказов
+    <div style="display: flex;flex-direction: row;justify-content: space-between; margin: 0 10px;">
+      <h1>
+          Выбор заказов
+      </h1>
+      <div class="card-header">
+      <div>
+          <label>
+              Дистанция маршрута:
+          </label>
+          <output id = "inputcheck" ></output>
+      </div>
+      <div>
+          <label>
+              Общее время:
+          </label>
+          <output id = "inputcheck2" ></output>
+      </div>
+    </div>
   </div>
-                  <input id = "inputcheck" class="form-control" readonly/>
-                  <input id = "inputcheck2" class="form-control" readonly/>
 
+<div class="diva">
   
   @if (Model!=null && Model.Any())
         {
@@ -59,7 +73,9 @@
 
             </ol>
         }
-     
+       <div id="map-container">
+      <div id="map"></div>
+  </div>
         <div class="divb">
   <form method="post" action="../Work/Index">
     <input type="text" id = "lat" name="latitude" hidden/>
@@ -70,9 +86,9 @@
     <input id = "startDelivery" class="floating-button" type="submit" value="Accept orders" />
 </form> 
   </div>
+  
   </div>
 </body>
-<div id="map"></div>
 <script>
 
         mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
@@ -123,6 +139,8 @@ function showPositionMap(position) {
                 var data_time = JSON.parse(JSON.stringify(data));
                 document.getElementById("inputcheck").value = data.routes[0].duration;
                 document.getElementById("inputcheck2").value = data.routes[0].distance;
+                document.getElementById("inputcheck3").value = data.routes[0].duration;
+                
             }
         new mapboxgl.Marker()
             .setLngLat([Lat1, Lon1])
@@ -144,6 +162,7 @@ function showPositionMap(position) {
          <script>
      document.getElementById("map").hidden = true;
      document.getElementById("startDelivery").hidden = true;
+     document.getElementById("map-container").style.display = 'none';
      </script>
      }
  <script>
