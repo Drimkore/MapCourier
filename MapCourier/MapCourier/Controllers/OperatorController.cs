@@ -17,6 +17,7 @@ public class OperatorController: Controller
 
     public IActionResult Index()
     {
+        int counter = 0;
         var delivery = _context.Delivery;
         var order = _context.Order;
         var storage = _context.Storage;
@@ -24,8 +25,10 @@ public class OperatorController: Controller
         ViewBag.Delivery = _context.Delivery;
         ViewBag.Order = _context.Order;
         ViewBag.Storage = _context.Storage;
-
-
+        foreach (var item in delivery)
+            if (item.OrderID is not null)
+                counter++;
+        ViewBag.Counter = counter;
         return View();    
     }
 
