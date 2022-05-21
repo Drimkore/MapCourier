@@ -1,21 +1,65 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="diva">
+    <h1>Мониторинг</h1>
+    <div style="width: 90%">
+        <h2>Заказов в работе: @ViewBag.Counter</h2>
+    </div>
 
-<h2>Index</h2>
+<table style="border: 2px solid black; width: 90%">
+    <tbody>
+        <tr>
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    5
+                </h6>
+                <p style="margin: 0">
+                    Доставлено
+                </p>
+             
+            </td>
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    5
+                </h6>
+                <p style="margin: 0">
+                    В пути
+                </p>
+            </td>
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    3
+                </h6>
+                <p style="margin: 0">
+                    Опоздания
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h2 style="width: 90%">Работает курьеров:</h2>
 
-Заказов в работе: @ViewBag.Counter
-<ul>
-@foreach (MapCourier.Models.Delivery a in ViewBag.Delivery)
-{
-    
-    if (a.OrderID is not null)
-    {<li>@a.DeliveryID</li>
-    <li>@a.OrderID</li>
-            <li>@a.UserID</li>
-    }
-    }
-</ul>
+<table style="border: none;border-collapse: separate;border-spacing: 0 10px;width: 90%;">
+    <tbody>
+     @foreach (MapCourier.Models.Delivery a in ViewBag.Delivery)
+     {
+       
+            @if (a.OrderID is not null)
+            {
+                <tr>
+                <td style="border: 2px solid black">@a.DeliveryID</td>
+                <td style="border: 2px solid black">@a.OrderID</td>
+                <td style="width: 35%; border: 2px solid black">@a.UserID</td>
+                </tr>
+            }
+        
+    } 
+    </tbody>
+
+
+</table>
+</div>
 
 
 <script>
