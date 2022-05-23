@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MapCourier.Data;
 using MapCourier.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MapCourier.Controllers
 {
+    [Authorize(Roles = "Admin,Operator")]
     public class OrdersController : Controller
     {
         private readonly MapContext _context;
@@ -61,7 +63,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderID,address,Longitude,Latitude,status")] Order order)
+        public async Task<IActionResult> Create([Bind("OrderID,address,Longitude,Latitude,status,TimeFrameBeginning,TimeFrameEnding")] Order order)
         {
             if (!User.Identity.IsAuthenticated){
                 return NotFound();

@@ -3,17 +3,15 @@
 @{
     ViewData["Title"] = "Delete";
 }
-<div class="diva">
+<div style="margin: 0 auto; width: 90%">
     <h1>Сведения о складе</h1>
-    <h3>Вы уверены, что хотите удалить это?</h3>
-
+@*    <h3>Вы уверены, что хотите удалить это?</h3>*@
 </div>
 
 
 
 <div class="diva">
-    <hr />
-        <table>
+        <table class="tabled">
         <tr>
             <th >
                 @Html.DisplayNameFor(model => model.storageName)

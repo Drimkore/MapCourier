@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 <div class="diva">
-    <h1>Создать заказ</h1>
+    <h1>Создание заказа</h1>
 </div>
 
 
@@ -13,34 +13,43 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
             <div>
-                <div>
-                    <label asp-for="address" class="control-label"></label>
+                <div class="form__group">
+                    <input id = "orderInput" asp-for="address" class="input_form" placeholder="Адрес" required />
+                    <span asp-validation-for="address" class="text-danger"></span>
+                    <label for="orderInput" class="label_form">Адрес</label>
                 </div>
                 <div>
-                <input id = "orderInput" asp-for="address" class="form-control" />
-                <span asp-validation-for="address" class="text-danger"></span>
+                    <label asp-for="TimeFrameBeginning" class="control-label"></label>
+                    <input asp-for="TimeFrameBeginning" class="input_form" />
+                    <span asp-validation-for="TimeFrameBeginning" class="text-danger"></span>
+                </div>
+                <div>
+                    <label asp-for="TimeFrameEnding" class="control-label"></label>
+                    <input asp-for="TimeFrameEnding" class="input_form" />
+                    <span asp-validation-for="TimeFrameEnding" class="text-danger"></span>
                 </div>
                 <div class="diva">
-                <button type = "button" id="buttonOrder" class="floating-button">Найти адрес</button>
+                    <button type = "button" id="buttonOrder" class="floating-button">Найти адрес</button>
                 </div>
             </div>
             
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input id = "inputLong" asp-for="Longitude" class="form-control" readonly/>
-                <span asp-validation-for="Longitude" class="text-danger"></span>
+            <div class="form__group">
+                <input id = "inputLong" asp-for="Longitude" class="input_form" placeholder="Адрес - координата долготы
+" readonly/>
+                @*<span asp-validation-for="Longitude" class="text-danger"></span>*@
+                <label asp-for="Longitude" class="label_form"></label>
             </div>
-            <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input id = "inputLat" asp-for="Latitude" class="form-control" readonly/>
-                <span asp-validation-for="Latitude" class="text-danger"></span>
+            <div class="form__group">
+                <input id = "inputLat" asp-for="Latitude" class="input_form" placeholder="Адрес - координата широты" readonly/>
+                <label asp-for="Latitude" class="label_form"></label>
+               @* <span asp-validation-for="Latitude" class="text-danger"></span>*@
             </div>
-            <div class="form-group">
-                <label asp-for="status" class="control-label"></label>
-                <input id = "inputDeliver" asp-for="status" class="form-control" readonly/>
-                <span asp-validation-for="status" class="text-danger"></span>
+            <div class="form__group">
+                
+                <input id = "inputDeliver" asp-for="status" class="input_form" placeholder="Статус заказа" readonly/>
+                <label asp-for="status" class="label_form"></label>
+               @* <span asp-validation-for="status" class="text-danger"></span>*@
             </div>
             <div class="divb">
                 <input type="submit" value="Создать" class="floating-button" />

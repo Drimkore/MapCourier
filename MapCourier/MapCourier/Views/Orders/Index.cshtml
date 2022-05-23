@@ -3,17 +3,21 @@
 @{
     ViewData["Title"] = "Index";
 }
-<div class="diva">
-    <h1>Index</h1>
-    <a asp-action="Create" class="floating-button">Создать</a>
-</div>
+<div>
+    <div class="divb" style="margin: 0 auto; width: 90%; justify-content:space-between">
+        <h1>Заказы</h1>
+        <a asp-action="Create" class="floating-button" style="margin:0">Добавить</a>
+    </div>
+    
 
 
 
-<table>
-    <thead>
-        <tr>
-            <th>
+
+
+<table  border="1" cellpadding="0" cellspacing="0">
+    <thead class="heading-table"> 
+        <tr style="border: 2px solid black">
+            <th colspan="2">
                 @Html.DisplayNameFor(model => model.address)
             </th>
             <th>
@@ -25,12 +29,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.status)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
+    
+
 @foreach (var item in Model) {
         <tr>
+            <td>
+                <input type="button" id="@item.OrderID" onclick="VisibilityOfMenu(this.id)" value="false" hidden/>
+                <label for="@item.OrderID" class="block"></label>
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.address)
             </td>
@@ -43,12 +52,39 @@
             <td>
                 @Html.DisplayFor(modelItem => item.status)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderID">Изменить</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderID">Сведения</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Удалить</a>
+        </tr>
+        <tr id="result_tr @item.OrderID" style="display: none;">
+            <td colspan="5" style="padding: 0">
+                <div style="display: flex; flex-direction: column">
+                    <div style="border-bottom: 2px solid black; padding: 5px 0">
+                        <a asp-action="Edit" asp-route-id="@item.OrderID" class="floating-button">Изменить</a>
+                        <a asp-action="Details" asp-route-id="@item.OrderID" class="floating-button">Сведения</a>
+                        <a asp-action="Delete" asp-route-id="@item.OrderID" class="floating-button">Удалить</a>
+                    </div>
+                </div>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</div>
+
+
+<script>
+    function VisibilityOfMenu(idTr)
+    {
+        let name = 'result_tr' + ' ' + idTr;
+        var result_style = document.getElementById(name).style;
+        if (document.getElementById(idTr).value == "false")
+        {
+            result_style.display = 'contents';
+            document.getElementById(idTr).value = "true";
+
+        }
+        else
+        {
+            result_style.display = 'none';
+            document.getElementById(idTr).value = "false";
+        }
+    }
+</script>

@@ -7,10 +7,6 @@ namespace MapCourier.Models
         [Key]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходим id")]
         public int OrderID { get; set; }
-        //[Display(Name = "Номер заказа")]
-        //[Required(AllowEmptyStrings = false, ErrorMessage = "Необходим номер заказа")]
-        //public int orderNumder { get; set; }
-        //public string orderName { get; set; }
         [Display(Name = "Адрес")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Необходим адрес")]
         public string address { get; set; }
@@ -23,7 +19,13 @@ namespace MapCourier.Models
         [Display(Name = "Статус заказа")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Укажите, доставляется ли заказ")]
         public string status { get; set; }        //"waiting"/"busy"/"finished"
-
-        //public DateTime timeOfMakingOrder { get; set; }
+        [Display(Name = "Начало назначенного времени доставки")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Отсутствует начало временных рамок доставки")]
+        public DateTime TimeFrameBeginning { get; set; }
+        [Display(Name = "Окончание назначенного времени доставки")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Отсутствует конец временных рамок доставки")]
+        public DateTime TimeFrameEnding { get; set; }
     }
 }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 <div class="diva">
-    <h1>Изменить сведения о складе</h1>
+    <h1>Изменение склада</h1>
 </div>
 
 
@@ -15,24 +15,24 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="StorageID" />
-            <div class="form-group">
-                <label asp-for="storageName" class="control-label"></label>
-                <input asp-for="storageName" class="form-control" />
+            <div class="form__group">
+                <input asp-for="storageName" class="input_form" />
+                <label asp-for="storageName" class="label_form"></label>
                 <span asp-validation-for="storageName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="storageAddress" class="control-label"></label>
-                <input asp-for="storageAddress" class="form-control" />
+            <div class="form__group">
+                <input asp-for="storageAddress" class="input_form" />
+                <label asp-for="storageAddress" class="label_form"></label>
                 <span asp-validation-for="storageAddress" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
+            <div class="form__group">
+                <input asp-for="Longitude" class="input_form" />
+                <label asp-for="Longitude" class="label_form"></label>
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
+            <div class="form__group">
+                <input asp-for="Latitude" class="input_form" />
+                <label asp-for="Latitude" class="label_form"></label>
                 <span asp-validation-for="Latitude" class="text-danger"></span>
             </div>
             <div class="divb">

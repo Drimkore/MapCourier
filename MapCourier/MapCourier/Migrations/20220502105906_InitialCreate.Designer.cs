@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MapCourier.Migrations
 {
     [DbContext(typeof(MapContext))]
-    [Migration("20220215092741_InitialCreate")]
+    [Migration("20220502105906_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -79,6 +79,12 @@ namespace MapCourier.Migrations
 
                     b.Property<string>("Longitude")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimeFrameBeginning")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("TimeFrameEnding")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("address")

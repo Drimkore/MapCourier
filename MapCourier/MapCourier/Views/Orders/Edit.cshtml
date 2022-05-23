@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 <div class="diva">
-    <h1>Изменить заказ</h1>
+    <h1>Изменение заказа</h1>
 </div>
 
 <hr />
@@ -13,24 +13,24 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OrderID" />
-            <div class="form-group">
-                <label asp-for="address" class="control-label"></label>
-                <input asp-for="address" class="form-control" />
+            <div class="form__group">
+                <input asp-for="address" class="input_form" />
+                <label asp-for="address" class="label_form"></label>
                 <span asp-validation-for="address" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Longitude" class="control-label"></label>
-                <input asp-for="Longitude" class="form-control" />
+            <div class="form__group">
+                <input asp-for="Longitude" class="input_form" />
+                <label asp-for="Longitude" class="label_form"></label>
                 <span asp-validation-for="Longitude" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Latitude" class="control-label"></label>
-                <input asp-for="Latitude" class="form-control" />
+            <div class="form__group">
+                <input asp-for="Latitude" class="input_form" />
+                <label asp-for="Latitude" class="label_form"></label>
                 <span asp-validation-for="Latitude" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="status" class="control-label"></label>
-                <input asp-for="status" class="form-control" />
+            <div class="form__group">
+                <input asp-for="status" class="input_form" />
+                <label asp-for="status" class="label_form"></label>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="divb">

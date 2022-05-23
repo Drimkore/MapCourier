@@ -3,12 +3,13 @@
 @{
     ViewData["Title"] = "Details";
 }
-<div class="diva">
+<div>
+<div style="margin: 0 auto; width: 90%">
        <h1>Детали заказа</h1>
 </div>
 
 <div class="diva">
-    <table>
+    <table class="tabled">
         <tr>
             <th >
                 @Html.DisplayNameFor(model => model.address)
@@ -45,10 +46,9 @@
      
     </table>
 
-
-
 <div class="divb" >
     <a asp-action="Edit" asp-route-id="@Model?.OrderID" class="floating-button">Изменить</a>
     <a asp-action="Index" class="floating-button">Назад</a>
+</div>
 </div>
 </div>
