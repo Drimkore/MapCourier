@@ -16,7 +16,7 @@
 <body>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
-<div style = "display:flex; justify-content:center">
+<div style = "display:flex; justify-content:center; flex-direction: column">
 
 <div class="divc">  
   
@@ -30,7 +30,9 @@
         @Model.storageAddress
     </li>
 </ol>
-<div id="map" ></div>
+</div>
+<div id="map-container">
+    <div id="map"></div>
 </div>
 </div>
 
@@ -38,7 +40,7 @@
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
+style: 'mapbox://styles/mapbox/navigation-night-v1',
 center: [60.619931, 56.830317],
 zoom: 9,
 maxZoom: 14,
@@ -50,7 +52,7 @@ var directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
     unit: 'metric',
     profice: 'mapbox/driving',
-    language: 'ru',
+    language: 'ru-RU',
     interactive: 'false'
 });
 map.addControl(directions,'top-left');
