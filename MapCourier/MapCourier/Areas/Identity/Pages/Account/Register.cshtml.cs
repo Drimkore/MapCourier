@@ -117,6 +117,12 @@ namespace MapCourier.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            var userByRole = await _userManager.GetUsersInRoleAsync("Admin");            
+            if ((!User.Identity.IsAuthenticated && userByRole.Count()>0)||(!User.IsInRole("Admin") && User.Identity.IsAuthenticated)) 
+            {
+                return NotFound();
+            }
+
             returnUrl ??= Url.Content("~/");
             var role = _roleManager.FindByIdAsync(Input.UserRole).Result;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
