@@ -13,13 +13,18 @@
     {<li>@a.DeliveryID</li>
     <li>@a.OrderID</li>
             <li>@a.UserID</li>
+    <form method="post" action="~/Operator">
+    <input type="text" name="action" value = "delete" hidden/><br />
+    <input type="number" name="deliveryID" value = "@a.DeliveryID" hidden/><br />
+    <input type="submit" value="Удалить" class="floating-button" style="width: 200px"/>
+    </form>
     }
     }
 </ul>
 
 
 <script>
-setTimeout(reload, 10000);
+setTimeout(reload, 1000000);
 function reload() {
     location.href=location.href;
 }

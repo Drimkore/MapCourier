@@ -15,13 +15,28 @@ public class OperatorController: Controller
         _context = context;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(string action, int? deliveryID)
     {
         int counter = 0;
         var delivery = _context.Delivery;
-        var order = _context.Order;
+        
         var storage = _context.Storage;
-
+        if (action == "delete")
+        {
+            var dataToDelete = delivery.Where(d => d.DeliveryID == deliveryID);
+            var busy = dataToDelete.Where(d => d.Order.status == "busy");
+            foreach (var item in dataToDelete)
+            {
+                _context.Delivery.Remove(item);
+            }
+            foreach (var a in busy)
+            {
+                var order = _context.Order.FirstOrDefault(o => o.OrderID == a.OrderID);
+                order.status = "waiting";
+                _context.Order.Update(order);
+            }
+                _context.SaveChangesAsync();
+        }
         ViewBag.Delivery = _context.Delivery;
         ViewBag.Order = _context.Order;
         ViewBag.Storage = _context.Storage;
@@ -29,14 +44,7 @@ public class OperatorController: Controller
             if (item.OrderID is not null)
                 counter++;
         ViewBag.Counter = counter;
+        
         return View();    
     }
-
-    //[HttpPost]
-    /*public async IActionResult Index()
-    {
-        return View();
-    }*/
-
-  
 }
