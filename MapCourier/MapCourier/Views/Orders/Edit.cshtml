@@ -33,6 +33,16 @@
                 <label asp-for="status" class="label_form"></label>
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
+            <div class="form__group">
+                <input asp-for="TimeFrameBeginning" class="input_form" />
+                <label asp-for="TimeFrameBeginning" class="label_form"></label>
+                <span asp-validation-for="TimeFrameBeginning" class="text-danger"></span>
+            </div>
+            <div class="form__group">
+                <input asp-for="TimeFrameEnding" class="input_form" />
+                <label asp-for="TimeFrameEnding" class="label_form"></label>
+                <span asp-validation-for="TimeFrameEnding" class="text-danger"></span>
+            </div>
             <div class="divb">
                 <input type="submit" value="Сохранить" class="floating-button" />
                 <a asp-action="Index" class="floating-button">Назад</a>
