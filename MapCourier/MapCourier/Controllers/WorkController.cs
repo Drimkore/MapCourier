@@ -2,9 +2,12 @@
 using MapCourier.Data;
 using MapCourier.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MapCourier.Controllers
 {
+    
+    [Authorize(Roles = "Courier")]
     public class WorkController : Controller
     {
         private readonly MapContext _context;
