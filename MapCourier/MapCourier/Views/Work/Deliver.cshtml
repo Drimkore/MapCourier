@@ -17,6 +17,19 @@
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
 <div style = "display:flex; justify-content:center; flex-direction: column">
+      <button class="button-dropinfo"data-bs-toggle="collapse" data-bs-target="#collapseExample">Показать</button>
+    <div class="collapse" id="collapseExample" style="text-align: center">
+        <ol class=cell>
+            <li>
+                @Model.address
+            </li>
+        </ol>
+    <form method="post" action="~/Work/Pickup">
+        <input type="text" name="action" value="redirect" hidden />
+        <input type="submit" value="К заказам" class="floating-button" style="width: 200px" />
+    </form>
+
+    </div>
 <div class="divc">  
     <form method="post" action="~/Work/Deliver">
         <input type="text" name="action" value="redirect" hidden />
