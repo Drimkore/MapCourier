@@ -63,10 +63,11 @@ var directions = new MapboxDirections({
     profile: 'mapbox/driving',
     language: 'ru-RU',
     controls: {
-          profileSwitcher: true,
+          profileSwitcher: false,
           inputs: false,
           instructions: false,
         },
+    interactive: false,
 });
 map.addControl(directions,'top-left');
 
