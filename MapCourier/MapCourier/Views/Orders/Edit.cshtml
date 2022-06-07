@@ -34,12 +34,12 @@
                 <span asp-validation-for="status" class="text-danger"></span>
             </div>
             <div class="form__group">
-                <input asp-for="TimeFrameBeginning" class="input_form" />
+                <input asp-for="TimeFrameBeginning" asp-format="{0:yyyy-MM-ddThh:mm}" class="input_form" />
                 <label asp-for="TimeFrameBeginning" class="label_form"></label>
                 <span asp-validation-for="TimeFrameBeginning" class="text-danger"></span>
             </div>
             <div class="form__group">
-                <input asp-for="TimeFrameEnding" class="input_form" />
+                <input asp-for="TimeFrameEnding" asp-format="{0:yyyy-MM-ddThh:mm}" class="input_form" />
                 <label asp-for="TimeFrameEnding" class="label_form"></label>
                 <span asp-validation-for="TimeFrameEnding" class="text-danger"></span>
             </div>

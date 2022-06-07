@@ -65,11 +65,7 @@
                     Lat3 = arrCoords[2].latitude;
                     Lon3 = arrCoords[2].longitude;
                     check = 3;
-
                 }
-                
-                
-                
                 document.getElementById("map").hidden = false;     
 
             </script>
@@ -163,7 +159,6 @@ function showPositionMap(position) {
                 var data_time = JSON.parse(JSON.stringify(data));
                 document.getElementById("inputcheck").value = data.routes[0].duration;
                 document.getElementById("inputcheck2").value = data.routes[0].distance;
-                document.getElementById("inputcheck3").value = data.routes[0].duration;
                 
             }
         
