@@ -20,11 +20,11 @@ namespace MapCourier.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Укажите, доставляется ли заказ")]
         public string status { get; set; }        //"waiting"/"busy"/"finished"
         [Display(Name = "Начало назначенного времени доставки")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Отсутствует начало временных рамок доставки")]
         public DateTime TimeFrameBeginning { get; set; }
         [Display(Name = "Окончание назначенного времени доставки")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Отсутствует конец временных рамок доставки")]
         public DateTime TimeFrameEnding { get; set; }
     }
