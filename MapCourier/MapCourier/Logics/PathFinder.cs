@@ -8,7 +8,8 @@ namespace MapCourier.Controllers
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
-        private readonly DateTime PresentTime = DateTime.Now;    /*new DateTime(2022, 06, 1, 12, 0, 0);*/
+        private readonly DateTime PresentTime = DateTime.Now; /*new DateTime(2022, 06, 1, 12, 0, 0);*/
+        private readonly TimeSpan MaxPathTime = new TimeSpan(2, 0, 0);
 
         public void GetData()
         {
@@ -16,10 +17,10 @@ namespace MapCourier.Controllers
             StorageMarks = new List<Mark>();
             using (var db = new MapContext())
             {
-                var orders = db.Order/*.Where(o => o.TimeFrameEnding.Subtract(presentTime) < new TimeSpan(2, 0, 0))*/;
+                var orders = db.Order/*.Where(o => o.TimeFrameEnding.Subtract(presentTime) < new TimeSpan(2, 0, 0))*/; //<-не работает как задуманно, жаль, разбраться в чём проблема не было возможности.
                 foreach (var o in orders)
                 {
-                    if(o.TimeFrameEnding.Subtract(PresentTime) > new TimeSpan(2, 0, 0))
+                    if(o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
                         continue;
                     if (o.address == null)
                         continue;
@@ -119,11 +120,10 @@ namespace MapCourier.Controllers
             return result;
         }
 
-        public List<List<Mark>> GetBestPaths(List<List<Mark>> paths, int count)
+        public List<Mark> GetBestPath(List<List<Mark>> paths)
         {
-            List<List<Mark>> result = new List<List<Mark>>();
             if (paths.Count == 0)
-                return result;
+                return null;
             SortedDictionary<TimeSpan, List<Mark>> keyValuePairs = new SortedDictionary<TimeSpan, List<Mark>>();
             foreach (var p in paths)
             {
@@ -140,7 +140,8 @@ namespace MapCourier.Controllers
                         timeToStorage = DistanceFinder.GetDeliveryTime(mark.NearStorageDist);
                     }
                     allTime += timeToDelivery + timeToStorage;
-                    if(mark.Status != "storage" && PresentTime + allTime > mark.TimeFrameEnding)
+                    DateTime estimatedTime = PresentTime + allTime;
+                    if (mark.Status != "storage" && estimatedTime > mark.TimeFrameEnding && estimatedTime < mark.TimeFrameBeginning)
                     {
                         timeFlag = true;
                         break;
@@ -148,7 +149,7 @@ namespace MapCourier.Controllers
                 }
                 if (timeFlag)
                     continue;
-                if (allTime > new TimeSpan(2, 0, 0))
+                if (allTime > MaxPathTime)
                     continue;
                 while (keyValuePairs.ContainsKey(allTime))
                 {
@@ -156,11 +157,22 @@ namespace MapCourier.Controllers
                 }
                 keyValuePairs.Add(allTime, p);
             }
-            for (var i = 0; i < count; i++)
+            int maxMarksCount = 0;
+            List<Mark> bestPath = null;
+            foreach(var vp in keyValuePairs)
             {
-                result.Add(keyValuePairs.Last().Value);
+                if(vp.Value.Count > maxMarksCount)
+                {
+                    maxMarksCount = vp.Value.Count;
+                    bestPath = vp.Value;
+                }
             }
-            return result;
+            //for (var i = 0; i < keyValuePairs.Count; i++)
+            //{
+            //    var j = keyValuePairs.Count - 1 - i;
+            //    result.Add(keyValuePairs.Last().Value);
+            //}
+            return bestPath;
         }
     }
     public class FinalResult
@@ -189,7 +201,7 @@ namespace MapCourier.Controllers
                 var allPaths = pathFinder.GetAllPaths();
                 if (allPaths.Count == 0)
                     return null;
-                var bestPath = pathFinder.GetBestPaths(allPaths, 1)[0];
+                var bestPath = pathFinder.GetBestPath(allPaths);
                 foreach (var m in bestPath)
                 {
                     if(m.Status == "waiting")
