@@ -8,7 +8,7 @@ namespace MapCourier.Controllers
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
-        private readonly DateTime PresentTime = new DateTime(2022, 06, 1, 12, 0, 0);
+        private readonly DateTime PresentTime = DateTime.Now;    /*new DateTime(2022, 06, 1, 12, 0, 0);*/
 
         public void GetData()
         {
@@ -122,6 +122,8 @@ namespace MapCourier.Controllers
         public List<List<Mark>> GetBestPaths(List<List<Mark>> paths, int count)
         {
             List<List<Mark>> result = new List<List<Mark>>();
+            if (paths.Count == 0)
+                return result;
             SortedDictionary<TimeSpan, List<Mark>> keyValuePairs = new SortedDictionary<TimeSpan, List<Mark>>();
             foreach (var p in paths)
             {
@@ -185,6 +187,8 @@ namespace MapCourier.Controllers
                 }
                 pathFinder.FindPaths(start);
                 var allPaths = pathFinder.GetAllPaths();
+                if (allPaths.Count == 0)
+                    return null;
                 var bestPath = pathFinder.GetBestPaths(allPaths, 1)[0];
                 foreach (var m in bestPath)
                 {

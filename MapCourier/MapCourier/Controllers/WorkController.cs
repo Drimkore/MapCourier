@@ -58,7 +58,8 @@ namespace MapCourier.Controllers
                 return View(orders);
             }
             var marks = FinalResult.GetResultPath(latitude, longitude);
-
+            if (marks == null)
+                return Redirect("../Work/Finish");
             foreach (var m in marks)
             {
                 Delivery d = new();
