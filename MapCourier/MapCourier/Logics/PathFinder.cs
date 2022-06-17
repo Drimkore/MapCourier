@@ -10,6 +10,7 @@ namespace MapCourier.Controllers
         public List<Mark> StorageMarks = new List<Mark>();
         private readonly DateTime PresentTime = DateTime.Now; /*new DateTime(2022, 06, 1, 12, 0, 0);*/
         private readonly TimeSpan MaxPathTime = new TimeSpan(2, 0, 0);
+        private readonly int MaxOrdersCount = 3;
 
         public void GetData()
         {
@@ -42,7 +43,7 @@ namespace MapCourier.Controllers
         }
         public void FindPaths(Mark mark)
         {
-            if (mark.PastMark.Count > 2)
+            if (mark.PastMark.Count > MaxOrdersCount - 1)
             {
                 Result.Add(new Mark(mark));
                 return;
@@ -113,7 +114,7 @@ namespace MapCourier.Controllers
                 }
                 if (nearStorage != null)
                     resultMarks.Add(nearStorage);
-                if (resultMarks.Count < 3)
+                if (resultMarks.Count < MaxOrdersCount)
                     continue;
                 result.Add(resultMarks);
             }
@@ -187,8 +188,6 @@ namespace MapCourier.Controllers
             using (var db = new MapContext())
             {
                 int minDist = int.MaxValue;
-                //if (!db.Storage.Any())
-                //    new NullReferenceException();
                 foreach (var storage in db.Storage)
                 {
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);
