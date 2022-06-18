@@ -101,7 +101,7 @@ namespace MapCourier.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderID,address,Longitude,Latitude,status")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderID,address,Longitude,Latitude,status,TimeFrameBeginning,TimeFrameEnding")] Order order)
         {
             if (!User.Identity.IsAuthenticated){
                 return NotFound();
