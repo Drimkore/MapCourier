@@ -149,7 +149,7 @@ function showPositionMap(position) {
             .addTo(map);
         }
         directions.setDestination([Lat3, Lon3]);
-        var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat1+','+Lon1+';'+Lat2+','+Lon2+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+        var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat1+','+Lon1+';'+Lat2+','+Lon2+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'//
             var request = new XMLHttpRequest();
             request.open('GET', requestURL);
             request.responseType = 'json';
@@ -158,7 +158,7 @@ function showPositionMap(position) {
                 data = request.response;
                 var data_time = JSON.parse(JSON.stringify(data));
                 document.getElementById("inputcheck").value = data.routes[0].duration;
-                document.getElementById("inputcheck2").value = data.routes[0].distance;
+                document.getElementById("inputcheck2").value = data.routes[0].distance; //
                 
             }
         

@@ -128,26 +128,43 @@ namespace MapCourier.Controllers
             SortedDictionary<TimeSpan, List<Mark>> keyValuePairs = new SortedDictionary<TimeSpan, List<Mark>>();
             foreach (var p in paths)
             {
-                double distance = 0;
+                //double allDistance = 0;
                 TimeSpan allTime = new TimeSpan();
                 bool timeFlag = false;
-                foreach (var mark in p)
+
+                for (var i = 1; i < p.Count; i++)
                 {
-                    distance += mark.PastMarkDist + mark.NearStorageDist;
-                    TimeSpan timeToDelivery = DistanceFinder.GetDeliveryTime(mark.PastMarkDist);
-                    TimeSpan timeToStorage = new TimeSpan();
-                    if(mark.NearStorageDist != 0)
-                    {
-                        timeToStorage = DistanceFinder.GetDeliveryTime(mark.NearStorageDist);
-                    }
-                    allTime += timeToDelivery + timeToStorage;
+                    var pathData = DistanceFinder.GetPathData(p[i - 1], p[i]);
+                    allTime += pathData.Time;
                     DateTime estimatedTime = PresentTime + allTime;
-                    if (mark.Status != "storage" && estimatedTime > mark.TimeFrameEnding && estimatedTime < mark.TimeFrameBeginning)
+                    if(p[i].Status == "storage")
+                    {
+                        continue;
+                    }
+                    if (estimatedTime > p[i].TimeFrameEnding || estimatedTime < p[i].TimeFrameBeginning)
                     {
                         timeFlag = true;
                         break;
-                    }
+                    }              
+               
                 }
+                //foreach (var mark in p)
+                //{
+                //    distance += mark.PastMarkDist + mark.NearStorageDist;
+                //    TimeSpan timeToDelivery = DistanceFinder.GetDeliveryTime(mark.PastMarkDist);
+                //    TimeSpan timeToStorage = new TimeSpan();
+                //    if(mark.NearStorageDist != 0)
+                //    {
+                //        timeToStorage = DistanceFinder.GetDeliveryTime(mark.NearStorageDist);
+                //    }
+                //    allTime += timeToDelivery + timeToStorage;
+                //    DateTime estimatedTime = PresentTime + allTime;
+                //    if (mark.Status != "storage" || estimatedTime > mark.TimeFrameEnding || estimatedTime < mark.TimeFrameBeginning)
+                //    {
+                //        timeFlag = true;
+                //        break;
+                //    }
+                //}
                 if (timeFlag)
                     continue;
                 if (allTime > MaxPathTime)
@@ -201,6 +218,8 @@ namespace MapCourier.Controllers
                 if (allPaths.Count == 0)
                     return null;
                 var bestPath = pathFinder.GetBestPath(allPaths);
+                if (bestPath == null)
+                    return null;
                 foreach (var m in bestPath)
                 {
                     if(m.Status == "waiting")

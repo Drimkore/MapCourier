@@ -1,6 +1,6 @@
 ﻿using MapCourier.Models;
 using System.Net;
-
+using Newtonsoft.Json;
 namespace MapCourier.Controllers
 {
     class DistanceFinder
@@ -44,6 +44,33 @@ namespace MapCourier.Controllers
             result = result.Remove(result.IndexOf(','));
             return result;
         }*/
+        public class PathData
+        {
+            public double Distance { get; set; }
+            public TimeSpan Time;
+            public PathData(string distance, string time)
+            {
+                Distance = double.Parse(distance.Replace('.', ','));
+                Time = new TimeSpan(0, 0, (int)double.Parse(time.Replace('.', ',')));
+            }
+        }
+        public class Response
+        {
+            public Routes[] routes { get; set; }
+        }
+        public class Routes
+        {
+            public string duration { get; set; }
+            public string distance { get; set; }
+        }
+        public static PathData GetPathData(Mark start, Mark finish)
+        {
+            string url = "https://api.mapbox.com/directions/v5/mapbox/driving/" + start.X + "," + start.Y + ";" + finish.X + "," + finish.Y +"?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA";
+            var parsed = JsonConvert.DeserializeObject<Response>(new WebClient().DownloadString(url));
+            var route = parsed.routes[0];
+            var result = new PathData(route.distance, route.duration);
+            return result;
+        }
         public static TimeSpan GetDeliveryTime(double distance)
         {
             distance *= 111;
