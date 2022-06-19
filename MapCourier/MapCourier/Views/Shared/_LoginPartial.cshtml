@@ -21,8 +21,12 @@
         </li>
         if (User.IsInRole("Admin"))
             {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <li class="header_list">
+            <a class="nav-link text-dark, header_check" asp-area="Identity" asp-page="/Account/Register">
+                <img src="/Images/Icons/add-user.svg" class="header_icons">
+                <div class="header_text">Регистрация</div>
+                <img>
+            </a>
         </li>
             }
 }
