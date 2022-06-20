@@ -21,7 +21,7 @@ namespace MapCourier.Controllers
                 var orders = db.Order/*.Where(o => o.TimeFrameEnding.Subtract(presentTime) < new TimeSpan(2, 0, 0))*/; //<-не работает как задуманно, жаль, разбраться в чём проблема не было возможности.
                 foreach (var o in orders)
                 {
-                    if(o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
+                    if(o.TimeFrameEnding.Date != PresentTime.Date || o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
                         continue;
                     if (o.address == null)
                         continue;
@@ -141,7 +141,7 @@ namespace MapCourier.Controllers
                     {
                         continue;
                     }
-                    if (estimatedTime > p[i].TimeFrameEnding || estimatedTime < p[i].TimeFrameBeginning)
+                    if (estimatedTime > p[i].TimeFrameEnding || estimatedTime < p[i].TimeFrameBeginning - new TimeSpan(0,15,0))
                     {
                         timeFlag = true;
                         break;
