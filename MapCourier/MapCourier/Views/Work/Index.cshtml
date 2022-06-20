@@ -151,7 +151,9 @@ function showPositionMap(position) {
             .addTo(map);
         }
         directions.setDestination([Lat3, Lon3]);
+        if (check == 1){
         var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+        }
             var request = new XMLHttpRequest();
             request.open('GET', requestURL);
             request.responseType = 'json';
