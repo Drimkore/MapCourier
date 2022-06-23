@@ -63,7 +63,7 @@ namespace MapCourier.Controllers
                 }
                 if (flag)
                     continue;
-                if (distance <= mark.NearMarkDist /*+ Spread*/)
+                if (distance <= mark.NearMarkDist + Spread)
                 {
                     if (mark.NearMarkDist - distance > Spread)
                     {
