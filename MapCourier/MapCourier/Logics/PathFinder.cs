@@ -5,7 +5,7 @@ namespace MapCourier.Controllers
 {
     class PathFinder
     {
-        private double Spread = 0.01; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
+        private double Spread = 0.03; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
