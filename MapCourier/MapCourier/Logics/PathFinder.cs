@@ -9,7 +9,7 @@ namespace MapCourier.Controllers
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
-        private readonly DateTime PresentTime = DateTime.Now; /*new DateTime(2022, 06, 1, 12, 0, 0);*/
+        private readonly DateTime PresentTime = /*DateTime.Now;*/ new DateTime(2022, 06, 23, 12, 0, 0);
         private readonly TimeSpan MaxPathTime = new TimeSpan(2, 0, 0);
         private readonly int MaxOrdersCount = 3;
 
