@@ -1,10 +1,11 @@
 ﻿using MapCourier.Models;
 using MapCourier.Data;
+using Microsoft.EntityFrameworkCore;
 namespace MapCourier.Controllers
 {
     class PathFinder
     {
-        private double Spread = 0.03; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
+        private double Spread = 0.01; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
@@ -18,17 +19,13 @@ namespace MapCourier.Controllers
             StorageMarks = new List<Mark>();
             using (var db = new MapContext())
             {
-                var orders = db.Order/*.Where(o => o.TimeFrameEnding.Subtract(presentTime) < new TimeSpan(2, 0, 0))*/; //<-не работает как задуманно, жаль, разбраться в чём проблема не было возможности.
+                var orders = db.Order.Where(o => o.TimeFrameEnding.Date == PresentTime.Date && o.status == "waiting"); //<-не работает как задуманно, жаль, разбраться в чём проблема не было возможности.
                 foreach (var o in orders)
                 {
-                    if(o.TimeFrameEnding.Date != PresentTime.Date || o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
+                    if(o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
                         continue;
                     if (o.address == null)
                         continue;
-                    if (o.status != "waiting")
-                    {
-                        continue;
-                    }
                     Mark clientMark = new Mark(o.Latitude, o.Longitude, o.OrderID, o.status, o.TimeFrameBeginning, o.TimeFrameEnding);
                     ClientMarks.Add(clientMark);
                 }
@@ -63,7 +60,7 @@ namespace MapCourier.Controllers
                 }
                 if (flag)
                     continue;
-                if (distance <= mark.NearMarkDist /*+ Spread*/)
+                if (distance <= mark.NearMarkDist + Spread)
                 {
                     if (mark.NearMarkDist - distance > Spread)
                     {
