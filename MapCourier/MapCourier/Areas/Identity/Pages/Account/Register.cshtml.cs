@@ -82,6 +82,10 @@ namespace MapCourier.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [Required]
+            [Display(Name = "UserName")]
+            public string UserName { get; set;}
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -117,6 +121,12 @@ namespace MapCourier.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            var userByRoleAdmin = await _userManager.GetUsersInRoleAsync("Admin");            
+            if ((!User.Identity.IsAuthenticated && userByRoleAdmin.Count()>0)||(!User.IsInRole("Admin") && User.Identity.IsAuthenticated)) 
+            {
+                return NotFound();
+            }
+
             returnUrl ??= Url.Content("~/");
             var role = _roleManager.FindByIdAsync(Input.UserRole).Result;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
@@ -124,7 +134,7 @@ namespace MapCourier.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

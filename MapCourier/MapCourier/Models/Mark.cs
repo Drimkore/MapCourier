@@ -10,13 +10,17 @@
         public double PastMarkDist;
         public List<Mark> NearMarks = new List<Mark>();
         public double NearMarkDist;
+        public DateTime TimeFrameBeginning;
+        public DateTime TimeFrameEnding;
         public string? Status; //"waiting"/"busy"/"finished"
-        public Mark(string x, string y, int id, string status)
+        public Mark(string x, string y, int id, string status, DateTime beginning, DateTime ending)
         {
             X = x;
             Y = y;
             ID = id;
             Status = status;
+            TimeFrameBeginning = beginning;
+            TimeFrameEnding = ending;
         }
         public Mark(string x, string y, int id)
         {
@@ -33,6 +37,8 @@
             ID = mark.ID;
             X = mark.X;
             Y = mark.Y;
+            TimeFrameBeginning = mark.TimeFrameBeginning;
+            TimeFrameEnding = mark.TimeFrameEnding;
             PastMark = new List<Mark>(mark.PastMark);
             NearStorageDist = mark.NearStorageDist;
             NearMarks = new List<Mark>(mark.NearMarks);

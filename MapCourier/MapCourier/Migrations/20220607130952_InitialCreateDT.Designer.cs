@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MapCourier.Migrations
 {
     [DbContext(typeof(MapContext))]
-    [Migration("20220502105906_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220607130952_InitialCreateDT")]
+    partial class InitialCreateDT
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace MapCourier.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UserID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserName")
                         .HasColumnType("TEXT");
 
                     b.HasKey("DeliveryID");

@@ -27,6 +27,5 @@ public class MapContext : IdentityDbContext
         public DbSet<MapCourier.Models.Storage> Storage { get; set; }
 
         public DbSet<MapCourier.Models.Delivery> Delivery { get; set; }
-        public DbSet<MapCourier.Models.DeliveryLog> DeliveryLog { get; set; }
-        //public DbSet<MapCourier.Areas.Identity.Pages.Account.RegisterModel> RegisterModels {get;set;}
+        public DbSet<MapCourier.Models.DeliveryLog> DeliveryLog { get; set; }        
 }

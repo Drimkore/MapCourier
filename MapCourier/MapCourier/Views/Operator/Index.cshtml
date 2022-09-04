@@ -1,0 +1,82 @@
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="diva">
+    <h1>Мониторинг</h1>
+    <div style="width: 90%">
+        <h2>Заказов в работе: @ViewBag.Counter</h2>
+    </div>
+
+<table style="border: 2px solid black; width: 90%">
+    <tbody>
+        <tr style="border: 2px solid black">
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    
+                </h6>
+                <p style="margin: 0">
+                    Доставлено
+                </p>
+             
+            </td>
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    
+                </h6>
+                <p style="margin: 0">
+                    В пути
+                </p>
+            </td>
+            <td style="width: 100px">
+                <h6 style="margin: 0">
+                    
+                </h6>
+                <p style="margin: 0">
+                    Опоздания
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h2 style="width: 90%">Работает курьеров:</h2>
+
+<table>
+    <thead class="heading-table">
+        <tr style="border: 2px solid black">
+            <th>Номер доставки</th>
+            <th>Номер заказа</th>
+            <th>Имя курьера</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+     @foreach (MapCourier.Models.Delivery a in ViewBag.Delivery)
+     {
+       
+            @if (a.OrderID is not null)
+            {
+                <tr style="font-size:14pt">
+                <td>@a.DeliveryID</td>
+                <td>@a.OrderID</td>
+                <td>@a.UserName</td>
+                <td>
+                    <form method="post" action="~/Operator">
+                    <input type="text" name="action" value = "delete" hidden/>
+                    <input type="number" name="deliveryID" value = "@a.DeliveryID" hidden/>
+                    <input type="submit" value="Удалить" class="floating-button" style="width: 200px"/>
+                    </form>
+                </td>
+                </tr>
+            }
+    } 
+    </tbody>
+</table>
+</div>
+
+
+<script>
+setTimeout(reload, 1000000);
+function reload() {
+    location.href=location.href;
+}
+</script>

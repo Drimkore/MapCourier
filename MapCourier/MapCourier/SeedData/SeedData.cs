@@ -33,7 +33,7 @@ namespace MapCourier.SeedData
                         Name = "Courier",
                         NormalizedName = "COURIER"
                     }
-                );
+                );  
                 context.SaveChanges();
             }
         }

@@ -2,9 +2,12 @@
 using MapCourier.Data;
 using MapCourier.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MapCourier.Controllers
 {
+    
+    [Authorize(Roles = "Courier")]
     public class WorkController : Controller
     {
         private readonly MapContext _context;
@@ -41,6 +44,7 @@ namespace MapCourier.Controllers
                 return NotFound();
             }
             var user = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
             var delivers = _context.Delivery.Where(d => d.UserID == user);
             var orders = new List<Order>();
             if (delivers.Any())
@@ -54,11 +58,13 @@ namespace MapCourier.Controllers
                 return View(orders);
             }
             var marks = FinalResult.GetResultPath(latitude, longitude);
-
+            if (marks == null)
+                return Redirect("../Work/Finish");
             foreach (var m in marks)
             {
                 Delivery d = new();
                 d.UserID = user;
+                d.UserName = username;
                 if (m.Status == "storage")
                 {
                     d.StorageID = m.ID;

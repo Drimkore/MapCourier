@@ -3,21 +3,84 @@
 @{
     ViewData["Title"] = "Выбор заказа";
 }
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display navigation directions</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+</head>
 <body>
-
-<div class="diva">
-  <div class="card-header">
-    Выбор заказов
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
+    <div style="display: flex;flex-direction: row;justify-content: space-between; margin: 0 10px;">
+      <h1>
+          Выбор заказов
+      </h1>
+      <div class="card-header">
+      <div>
+          <label>
+              Дистанция маршрута:
+          </label>
+          <output id = "inputcheck" ></output>
+      </div>
+      <div>
+          <label>
+              Общее время:
+          </label>
+          <output id = "inputcheck2" ></output>
+      </div>
+    </div>
   </div>
+<div class="diva">
+  
   @if (Model!=null && Model.Any())
         {
+            <script>
+                var arrCoords = @Html.Raw(Json.Serialize(@Model));  
+                if (@Model.Count == 1)
+                {
+                    Lat3 = arrCoords[0].latitude;
+                    Lon3 = arrCoords[0].longitude;
+                    check = 1;
+
+                }
+                else if (@Model.Count == 2)
+                {
+                    Lat1 = arrCoords[0].latitude;
+                    Lon1 = arrCoords[0].longitude;
+                    Lat3 = arrCoords[1].latitude;
+                    Lon3 = arrCoords[1].longitude;
+                    check = 2;
+
+                }
+                else if (@Model.Count == 3)
+                {
+                    Lat1 = arrCoords[0].latitude;
+                    Lon1 = arrCoords[0].longitude;
+                    Lat2 = arrCoords[1].latitude;
+                    Lon2 = arrCoords[1].longitude;
+                    Lat3 = arrCoords[2].latitude;
+                    Lon3 = arrCoords[2].longitude;
+                    check = 3;
+                }
+                document.getElementById("map").hidden = false;     
+
+            </script>
             <ol class="square">
                 @for (int i = 0; i < Model.Count(); i++)
                 {
-                    <li>@Model[i].address</li>}
+                    <li>@Model[i].address</li>
+                }
+
             </ol>
         }
+         </div>
+       <div id="map-container">
+      <div id="map"></div>
+  </div>
         <div class="divb">
   <form method="post" action="../Work/Index">
     <input type="text" id = "lat" name="latitude" hidden/>
@@ -28,9 +91,82 @@
     <input id = "startDelivery" class="floating-button" type="submit" value="Accept orders" />
 </form> 
   </div>
-  </div>
-</body>
+  
 
+</body>
+<script>
+
+        mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/navigation-night-v1',
+            center: [60.619931, 56.830317],
+            zoom: 9,
+            maxZoom: 14,
+            });
+            var directions = new MapboxDirections({
+                accessToken: mapboxgl.accessToken,
+                unit: 'metric',
+                profile: 'mapbox/driving',
+                language: 'ru-RU',
+                controls: {
+                    profileSwitcher: false,
+                    inputs: false,
+                    instructions: true,
+                    },
+                interactive: false,
+            });
+            
+map.addControl(directions,'top-left');
+
+map.on('contextmenu', function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPositionMap);
+    }
+})
+
+
+
+function showPositionMap(position) {
+        directions.setOrigin([position.coords.longitude, position.coords.latitude]);
+        
+        if (check == 2)
+        {
+            var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat1+','+Lon1+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+        directions.addWaypoint(1, [Lat1, Lon1]);
+        new mapboxgl.Marker()
+            .setLngLat([Lat1, Lon1])
+            .addTo(map);
+        }
+        if (check == 3)
+        {
+            var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat1+','+Lon1+';'+Lat2+','+Lon2+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+        directions.addWaypoint(1, [Lat1, Lon1]);
+        directions.addWaypoint(2, [Lat2, Lon2]);
+        new mapboxgl.Marker()
+            .setLngLat([Lat1, Lon1])
+            .addTo(map);
+        new mapboxgl.Marker()
+            .setLngLat([Lat2, Lon2])
+            .addTo(map);
+        }
+        directions.setDestination([Lat3, Lon3]);
+        if (check == 1){
+        var requestURL = 'https://api.mapbox.com/directions/v5/mapbox/driving/'+position.coords.longitude+','+position.coords.latitude+';'+Lat3+','+Lon3+'?&access_token=pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA'
+        }
+            var request = new XMLHttpRequest();
+            request.open('GET', requestURL);
+            request.responseType = 'json';
+            request.send();
+            request.onload = function () {
+                data = request.response;
+                var data_time = JSON.parse(JSON.stringify(data));
+                document.getElementById("inputcheck2").value = data.routes[0].duration;
+                document.getElementById("inputcheck").value = data.routes[0].distance; 
+                
+            }        
+        }
+</script>
 
  @section Scripts {
      @if (Model!=null && Model.Any()){
@@ -40,17 +176,29 @@
      }
      else {
          <script>
+     document.getElementById("map").hidden = true;
      document.getElementById("startDelivery").hidden = true;
+     document.getElementById("map-container").style.display = 'none';
      </script>
      }
  <script>
       if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+      }
+      else {
+          alert("Hello");
       }
       function showPosition(position) {
       document.getElementById("lat").value = position.coords.latitude;
       document.getElementById("lon").value = position.coords.longitude;
       document.getElementById("getOrders").hidden = false;
       }
+      function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("Разрешите доступ к геолокации");
+            }
+      }
  </script>
  }
+ </html>

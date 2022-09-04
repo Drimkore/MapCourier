@@ -30,7 +30,7 @@ body {
 }
 
 .divc {
-    max-width:1000px;
+   /* max-width:1000px;*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -136,30 +136,27 @@ a {
 }
 
 #map {
-    margin-top: 250px;
+    position: relative;
+    height: inherit;
+    width: inherit;
+/*    margin-top: 250px;
     margin-bottom: 100px;
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
     max-width: 1000px;
-    border: 1px solid black
+    border: 1px solid black*/
 }
 
-@media (max-width: 786px){
-    .divc{
-        flex-direction:column;
-    }
-    .cell li {
-        margin: 0;
-        font-size: 12pt;
-    }
+#map-container {
+    position: relative;
+    height: 500px;
+    width: 1300px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 50%)
 }
-@media (max-width: 435px) {
-    #map {
-        margin-top: 350px;
-    }
-}
+
+
 
 .block {
     width: 0;
@@ -308,5 +305,113 @@ tr:hover {
     border-bottom: 2px solid white;
 }
 
+header {
+    border-top: 4px solid black;
+}
+
+.header_position_menu {
+    justify-content: flex-end;
+}
+
+.header_icons {
+    width: 30px;
+
+}
+
+.header_list {
+    margin: 0 20px;
+    text-align: center;
+}
+
+.header_check {
+    position: relative;
+    display: inline-block;
+}
+
+.header_check:hover .header_text {
+    opacity: 1;
+}
+
+.header_text {
+    transition: all 0.6s;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-family: cursive;
+    font-size: 14px;
+    padding: 1px 0;
+    width: 100%;
+}
+
+.header_logo {
+    display: block;
+    width: 30px;
+}
+
+.header_triangle {
+    width: 64px;
+    margin-top: -20px;
+}
+
+.button-dropinfo {
+    background: black;
+    color: white;
+    border: none;
+}
+
+@media (max-width: 786px) {
+    .divc {
+        flex-direction: column;
+    }
+
+    .cell li {
+        margin: 0;
+        font-size: 12pt;
+    }
+}
+
+@media (max-width: 600px) {
+    #map-container {
+        width:auto;
+       
+    }
+
+    .header_triangle {
+        display: none;
+    }
+
+    .navbar-nav {
+        flex-direction: row;
+    }
+
+    .header_position_menu {
+        justify-content:center;
+    }
+
+    .header_text {
+        opacity: 1;
+        position: relative;
+    }
+
+    .divc {
+        display: none;
+    }
+
+}
+
+@media (min-width: 650px) {
+    .header_logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    .button-dropinfo {
+        display: none;
+    }
 
 
+
+}

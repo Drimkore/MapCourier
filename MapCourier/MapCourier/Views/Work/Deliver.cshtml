@@ -16,7 +16,20 @@
 <body>
 <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.js"></script>
 <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.0/mapbox-gl-directions.css" type="text/css">
-<div style = "display:flex; justify-content:center">
+<div style = "display:flex; justify-content:center; flex-direction: column">
+      <button class="button-dropinfo"data-bs-toggle="collapse" data-bs-target="#collapseExample">Показать</button>
+    <div class="collapse" id="collapseExample" style="text-align: center">
+        <ol class=cell>
+            <li>
+                @Model.address
+            </li>
+        </ol>
+    <form method="post" action="~/Work/Pickup">
+        <input type="text" name="action" value="redirect" hidden />
+        <input type="submit" value="К заказам" class="floating-button" style="width: 200px" />
+    </form>
+
+    </div>
 <div class="divc">  
     <form method="post" action="~/Work/Deliver">
         <input type="text" name="action" value="redirect" hidden />
@@ -27,30 +40,34 @@
         @Model.address
     </li>
 </ol>
-<div id="map"></div>
+</div>
+<div id="map-container">
+    <div id="map"></div>
 </div>
 </div>
-
 
 
 <script>
 	mapboxgl.accessToken = 'pk.eyJ1Ijoic3ZlbmFuIiwiYSI6ImNrems0ZnJxeDNnY2EydW8xcDg0cTZrbDQifQ.eBbv3xNxhyEG65wGR8cRSA';
 const map = new mapboxgl.Map({
 container: 'map',
-style: 'mapbox://styles/mapbox/streets-v11',
+style: 'mapbox://styles/mapbox/navigation-night-v1',
 center: [60.619931, 56.830317],
 zoom: 9,
 maxZoom: 14,
-interactive: 'false'
 });
-
 
 var directions = new MapboxDirections({
     accessToken: mapboxgl.accessToken,
     unit: 'metric',
-    profice: 'mapbox/driving',
-    language: 'ru',
-    interactive: 'false'
+    profile: 'mapbox/driving',
+    language: 'ru-RU',
+    controls: {
+          profileSwitcher: false,
+          inputs: false,
+          instructions: false,
+        },
+    interactive: false,
 });
 map.addControl(directions,'top-left');
 
@@ -63,10 +80,8 @@ map.on('load', function() {
 function showPosition(position) {
     directions.setOrigin([position.coords.longitude, position.coords.latitude]);
     directions.setDestination([@Model.Latitude, @Model.Longitude]);
-    
 }
 
 </script>
-
 </body>
 </html>

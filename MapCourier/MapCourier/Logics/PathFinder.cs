@@ -1,26 +1,54 @@
 ﻿using MapCourier.Models;
 using MapCourier.Data;
+using Microsoft.EntityFrameworkCore;
 namespace MapCourier.Controllers
 {
     class PathFinder
     {
-        private double Spread = 0.01; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
+        private double Spread = 0.03; // разброс в градусах параллелей. 1 = 111 километров => 0.01 = 1.11 километр, далее считать самому
         private List<Mark> Result = new List<Mark>();
         public List<Mark> ClientMarks = new List<Mark>();
         public List<Mark> StorageMarks = new List<Mark>();
+        private readonly DateTime PresentTime = /*DateTime.Now;*/ new DateTime(2022, 06, 23, 12, 0, 0);
+        private readonly TimeSpan MaxPathTime = new TimeSpan(2, 0, 0);
+        private readonly int MaxOrdersCount = 3;
 
+        public void GetData()
+        {
+            ClientMarks = new List<Mark>();
+            StorageMarks = new List<Mark>();
+            using (var db = new MapContext())
+            {
+                var orders = db.Order.Where(o => o.TimeFrameEnding.Date == PresentTime.Date && o.status == "waiting"); //<-не работает как задуманно, жаль, разбраться в чём проблема не было возможности.
+                foreach (var o in orders)
+                {
+                    if(o.TimeFrameEnding.Subtract(PresentTime) > MaxPathTime)
+                        continue;
+                    if (o.address == null)
+                        continue;
+                    Mark clientMark = new Mark(o.Latitude, o.Longitude, o.OrderID, o.status, o.TimeFrameBeginning, o.TimeFrameEnding);
+                    ClientMarks.Add(clientMark);
+                }
+                foreach (var s in db.Storage)
+                {
+                    if (s.storageAddress == null)
+                        continue;
+                    Mark storageMark = new Mark(s.Latitude, s.Longitude, s.StorageID);
+                    StorageMarks.Add(storageMark);
+                }
+            }
+        }
         public void FindPaths(Mark mark)
         {
-            if (mark.PastMark.Count > 2)
+            if (mark.PastMark.Count > MaxOrdersCount - 1)
             {
                 Result.Add(new Mark(mark));
                 return;
-            }
-
+            }            
             mark.NearMarkDist = double.MaxValue;
-            foreach (var c in ClientMarks)
+            foreach (var cm in ClientMarks)
             {
-                Mark ClientMark = new(c);
+                Mark ClientMark = new(cm);
                 if (mark.ID == ClientMark.ID)
                     continue;
                 double distance = DistanceFinder.GetMapsDistance(mark, ClientMark);
@@ -32,7 +60,7 @@ namespace MapCourier.Controllers
                 }
                 if (flag)
                     continue;
-                if (distance <= mark.NearMarkDist)
+                if (distance <= mark.NearMarkDist + Spread)
                 {
                     if (mark.NearMarkDist - distance > Spread)
                     {
@@ -52,40 +80,15 @@ namespace MapCourier.Controllers
                     mark.NearMarkDist = distance;
                 }
             }
-            foreach (var m in mark.NearMarks)
+            foreach (var nm in mark.NearMarks)
             {
-                FindPaths(m);
+                FindPaths(nm);
             }
-            if (mark.NearMarks.Count == 0 && mark.PastMark.Count > 0)
-            {
-                Result.Add(new(mark));
-            }
-        }
-        public void GetData()
-        {
-            ClientMarks = new List<Mark>();
-            StorageMarks = new List<Mark>();
-            using (var db = new MapContext())
-            {
-                foreach (var o in db.Order)
-                {
-                    if (o.address == null)
-                        continue;
-                    if(o.status != "waiting")
-                    {
-                        continue;
-                    }
-                    Mark clientMark = new Mark(o.Latitude, o.Longitude, o.OrderID, o.status);
-                    ClientMarks.Add(clientMark);
-                }
-                foreach (var s in db.Storage)
-                {
-                    if (s.storageAddress == null)
-                        continue;
-                    Mark storageMark = new Mark(s.Latitude, s.Longitude, s.StorageID);
-                    StorageMarks.Add(storageMark);
-                }
-            }
+            //if (mark.NearMarks.Count == 0 && mark.PastMark.Count > 0)
+            //{
+            //    Result.Add(new(mark));
+            //}
+            Result.Add(new(mark));
         }
         public List<List<Mark>> GetAllPaths()
         {
@@ -108,34 +111,83 @@ namespace MapCourier.Controllers
                 }
                 if (nearStorage != null)
                     resultMarks.Add(nearStorage);
+                if (resultMarks.Count < MaxOrdersCount)
+                    continue;
                 result.Add(resultMarks);
             }
             return result;
         }
 
-        public List<List<Mark>> GetBestPaths(List<List<Mark>> marks, int count)
+        public List<Mark> GetBestPath(List<List<Mark>> paths)
         {
-            marks.Sort(new Mark());
-            List<List<Mark>> result = new List<List<Mark>>();
-            SortedDictionary<double, List<Mark>> keyValuePairs = new SortedDictionary<double, List<Mark>>();
-            foreach (var i in marks)
+            if (paths.Count == 0)
+                return null;
+            SortedDictionary<TimeSpan, List<Mark>> keyValuePairs = new SortedDictionary<TimeSpan, List<Mark>>();
+            foreach (var p in paths)
             {
-                double distance = 0;
-                foreach (var j in i)
+                //double allDistance = 0;
+                TimeSpan allTime = new TimeSpan();
+                bool timeFlag = false;
+
+                for (var i = 1; i < p.Count; i++)
                 {
-                    distance += j.PastMarkDist + j.NearStorageDist;
+                    var pathData = DistanceFinder.GetPathData(p[i - 1], p[i]);
+                    allTime += pathData.Time;
+                    DateTime estimatedTime = PresentTime + allTime;
+                    if(p[i].Status == "storage")
+                    {
+                        continue;
+                    }
+                    if (estimatedTime > p[i].TimeFrameEnding || estimatedTime < p[i].TimeFrameBeginning - new TimeSpan(0,15,0))
+                    {
+                        timeFlag = true;
+                        break;
+                    }              
+               
                 }
-                while (keyValuePairs.ContainsKey(distance))
+                //foreach (var mark in p)
+                //{
+                //    distance += mark.PastMarkDist + mark.NearStorageDist;
+                //    TimeSpan timeToDelivery = DistanceFinder.GetDeliveryTime(mark.PastMarkDist);
+                //    TimeSpan timeToStorage = new TimeSpan();
+                //    if(mark.NearStorageDist != 0)
+                //    {
+                //        timeToStorage = DistanceFinder.GetDeliveryTime(mark.NearStorageDist);
+                //    }
+                //    allTime += timeToDelivery + timeToStorage;
+                //    DateTime estimatedTime = PresentTime + allTime;
+                //    if (mark.Status != "storage" || estimatedTime > mark.TimeFrameEnding || estimatedTime < mark.TimeFrameBeginning)
+                //    {
+                //        timeFlag = true;
+                //        break;
+                //    }
+                //}
+                if (timeFlag)
+                    continue;
+                if (allTime > MaxPathTime)
+                    continue;
+                while (keyValuePairs.ContainsKey(allTime))
                 {
-                    distance += 0.1e-15;
+                    allTime += new TimeSpan(0,0,1);
                 }
-                keyValuePairs.Add(distance, i);
+                keyValuePairs.Add(allTime, p);
             }
-            for (var i = 0; i < count; i++)
+            int maxMarksCount = 0;
+            List<Mark> bestPath = null;
+            foreach(var vp in keyValuePairs)
             {
-                result.Add(keyValuePairs.ElementAt(i).Value);
+                if(vp.Value.Count > maxMarksCount)
+                {
+                    maxMarksCount = vp.Value.Count;
+                    bestPath = vp.Value;
+                }
             }
-            return result;
+            //for (var i = 0; i < keyValuePairs.Count; i++)
+            //{
+            //    var j = keyValuePairs.Count - 1 - i;
+            //    result.Add(keyValuePairs.Last().Value);
+            //}
+            return bestPath;
         }
     }
     public class FinalResult
@@ -150,8 +202,6 @@ namespace MapCourier.Controllers
             using (var db = new MapContext())
             {
                 int minDist = int.MaxValue;
-                //if (!db.Storage.Any())
-                //    new NullReferenceException();
                 foreach (var storage in db.Storage)
                 {
                     var bufferDist = DistanceFinder.GetMapsDistance(x, y, storage.Latitude, storage.Longitude);
@@ -162,7 +212,11 @@ namespace MapCourier.Controllers
                 }
                 pathFinder.FindPaths(start);
                 var allPaths = pathFinder.GetAllPaths();
-                var bestPath = pathFinder.GetBestPaths(allPaths, 1)[0];
+                if (allPaths.Count == 0)
+                    return null;
+                var bestPath = pathFinder.GetBestPath(allPaths);
+                if (bestPath == null)
+                    return null;
                 foreach (var m in bestPath)
                 {
                     if(m.Status == "waiting")
